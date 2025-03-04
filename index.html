@@ -3,271 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids Game Adventure Portal</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Kids Math Learning Adventure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap');
+        
         :root {
-            --primary: #4B7BEC;
-            --secondary: #FFA801;
-            --accent: #FC427B;
-            --light: #F8EFBA;
-            --dark: #3B3B98;
-            --success: #20BF6B;
-            --white: #ffffff;
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #4cc9f0;
+            --accent: #f72585;
+            --accent-light: #ff6b95;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #4a5568;
+            --border: #e2e8f0;
             --shadow: rgba(0, 0, 0, 0.1);
+            --success: #48bb78;
+        }
+        
+        .dark-mode {
+            --background: #1a202c;
+            --card-bg: #2d3748;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --border: #4a5568;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
         
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         body {
-            background-color: #f9f9f9;
-            background-image: 
-                radial-gradient(var(--light) 2px, transparent 2px),
-                radial-gradient(var(--light) 2px, transparent 2px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
-            overflow-x: hidden;
-            min-height: 100vh;
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 4rem;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 1.5rem;
         }
         
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 0;
             position: relative;
             overflow: hidden;
-            border-radius: 20px;
-            background: var(--light);
-            box-shadow: 0 10px 20px var(--shadow);
+            box-shadow: 0 4px 15px var(--shadow);
         }
         
-        .header h1 {
-            font-size: 3rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 0px var(--secondary);
-            letter-spacing: 2px;
-        }
-        
-        .header p {
-            font-size: 1.2rem;
-            color: var(--dark);
-            max-width: 600px;
+        .header-content {
+            max-width: 1200px;
             margin: 0 auto;
-        }
-        
-        .header:before {
-            content: "";
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.5;
-        }
-        
-        .header:after {
-            content: "";
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: var(--secondary);
-            border-radius: 50%;
-            opacity: 0.5;
-        }
-        
-        .category-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 15px;
-        }
-        
-        .category-tab {
-            padding: 12px 25px;
-            background: var(--white);
-            border: 4px solid var(--primary);
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px var(--shadow);
+            padding: 0 1.5rem;
             position: relative;
+            z-index: 2;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #f0f4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .header-shapes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             z-index: 1;
         }
         
-        .category-tab:before {
-            content: "";
+        .header-shape {
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background: var(--primary);
+            opacity: 0.1;
+            background-color: white;
+        }
+        
+        .shape-1 {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            top: -40px;
+            right: 10%;
+        }
+        
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            transform: rotate(45deg);
+            bottom: 20px;
+            right: 20%;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            border-radius: 30%;
+            top: 30%;
+            right: 5%;
+        }
+        
+        /* Controls */
+        .controls-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        
+        .controls-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .folder-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .folder-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
             transition: all 0.3s ease;
-            z-index: -1;
+            display: flex;
+            align-items: center;
         }
         
-        .category-tab:hover:before,
-        .category-tab.active:before {
+        .folder-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .folder-btn:hover, .folder-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+        }
+        
+        .search-box {
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .search-input {
             width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text);
+            transition: all 0.3s ease;
         }
         
-        .category-tab:hover,
-        .category-tab.active {
-            color: var(--white);
-            transform: translateY(-3px);
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
         
-        .games-grid {
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        /* Game Grid */
+        .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: the primary;
+            gap: 2rem;
         }
         
         .game-card {
-            background: var(--white);
-            border-radius: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 20px var(--shadow);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            animation: popIn 0.5s ease forwards;
+            box-shadow: 0 4px 10px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             opacity: 0;
-            transform: scale(0.9);
-        }
-        
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            70% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+            position: relative;
         }
         
         .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px var(--shadow);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
         
-        .game-image {
-            height: 180px;
-            background-color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--primary);
+        .game-header {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
             position: relative;
             overflow: hidden;
-        }
-        
-        .game-image i {
-            position: relative;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-        
-        .game-card:hover .game-image i {
-            transform: scale(1.2);
-        }
-        
-        .game-image:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: all 0.5s ease;
-        }
-        
-        .game-card:hover .game-image:before {
-            left: 100%;
-        }
-        
-        .game-info {
-            padding: 20px;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .game-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .game-folder {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: white;
         }
         
         .game-title {
             font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-            text-align: center;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            z-index: 1;
+        }
+        
+        .game-type {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        
+        .game-content {
+            padding: 1.5rem;
         }
         
         .game-description {
-            font-size: 1rem;
-            color: #666;
-            text-align: center;
-            flex-grow: 1;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 4.8rem;
         }
         
-        .play-button {
-            display: block;
-            width: 80%;
-            margin: 15px auto 5px;
-            padding: 12px;
-            background: var(--success);
-            color: var(--white);
-            border: none;
+        .game-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
             border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(32, 191, 107, 0.3);
         }
         
-        .play-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(32, 191, 107, 0.5);
+        .game-link:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(247, 37, 133, 0.3);
         }
         
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.5rem;
+        /* Banner */
+        .welcome-banner {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(67, 97, 238, 0.05) 0%, rgba(67, 97, 238, 0) 70%);
+            z-index: 0;
+        }
+        
+        .banner-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner-title {
             color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.7rem;
         }
         
-        .loading i {
+        .banner-text {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .banner-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .banner-btn:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.3);
+        }
+        
+        .banner-image {
+            margin-left: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+        }
+        
+        /* Loading and Message States */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin-right: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-text {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        .message {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            margin: 2rem 0;
+        }
+        
+        .message-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .message-title {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .message-text {
+            color: var(--text-light);
+        }
+        
+        /* Status Message */
+        .status-message {
+            background-color: #EBF8FF;
+            border-left: 4px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .status-message.error {
+            background-color: #FFF5F5;
+            border-left-color: #F56565;
+            color: #C53030;
+        }
+        
+        .status-message.success {
+            background-color: #F0FFF4;
+            border-left-color: var(--success);
+            color: var(--success);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.5s ease forwards;
         }
         
         @keyframes spin {
@@ -275,614 +515,476 @@
             100% { transform: rotate(360deg); }
         }
         
-        .no-games {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.5rem;
-            color: var(--accent);
+        .pulse {
+            animation: pulse 2.5s infinite;
         }
         
-        .error {
-            text-align: center;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 800px;
-            background: #ffebee;
-            border-radius: 10px;
-            color: #d32f2f;
-            border: 2px solid #ffcdd2;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            color: var(--dark);
-            font-size: 1rem;
-        }
-        
-        /* Animations for characters */
-        .character {
-            position: absolute;
-            animation: float 5s ease-in-out infinite;
-        }
-        
-        .character.rocket {
-            top: 20px;
-            right: 50px;
-            font-size: 2.5rem;
-            color: var(--accent);
-            transform: rotate(45deg);
-        }
-        
-        .character.star {
-            top: 80px;
-            left: 80px;
-            font-size: 2rem;
-            color: var(--secondary);
-        }
-        
-        .character.planet {
-            bottom: 30px;
-            left: 50px;
-            font-size: 2.5rem;
-            color: var(--primary);
+        .float {
+            animation: float 5s infinite ease-in-out;
         }
         
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
         
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
+            header h1 {
+                font-size: 2rem;
             }
             
-            .category-tabs {
-                flex-direction: column;
-                align-items: center;
+            .banner-image {
+                display: none;
             }
             
-            .category-tab {
-                width: 80%;
+            .welcome-banner {
                 text-align: center;
             }
             
-            .games-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .theme-toggle {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
             }
-        }
-        
-        /* Game Launch Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: var(--white);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            height: 90vh;
-            position: relative;
-            padding: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2rem;
-            color: var(--dark);
-            cursor: pointer;
-            z-index: 10;
-            background: var(--light);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 10px var(--shadow);
-        }
-        
-        .modal-frame {
-            width: 100%;
-            height: calc(100% - 20px);
-            border: none;
-            border-radius: 15px;
-            margin-top: 20px;
+            
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="header-shapes">
+            <div class="header-shape shape-1"></div>
+            <div class="header-shape shape-2"></div>
+            <div class="header-shape shape-3"></div>
+        </div>
+        <div class="header-content">
+            <h1>Interactive Mathematics Learning Center</h1>
+            <p>Engaging educational games designed to make learning mathematics fun and effective for young minds.</p>
+        </div>
+    </header>
+    
     <div class="container">
-        <div class="header">
-            <h1>Kids Game Adventure Portal</h1>
-            <p>Select a fun game to play from our awesome collection!</p>
-            
-            <!-- Animated characters -->
-            <div class="character rocket"><i class="fas fa-rocket"></i></div>
-            <div class="character star"><i class="fas fa-star"></i></div>
-            <div class="character planet"><i class="fas fa-globe-americas"></i></div>
+        <div class="welcome-banner">
+            <div class="banner-bg"></div>
+            <div class="banner-content">
+                <h3 class="banner-title">Welcome to our Learning Adventure!</h3>
+                <p class="banner-text">Our educational games combine fun and learning to help young minds develop strong mathematical foundations while enjoying themselves.</p>
+                <a href="#games" class="banner-btn pulse">Explore Games</a>
+            </div>
+            <div class="banner-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cstyle%3E.st0%7Bfill:%234361ee%7D.st1%7Bfill:%234895ef%7D.st2%7Bfill:%23f72585%7D.st3%7Bfill:%234cc9f0%7D.st4%7Bfill:%23fff%7D%3C/style%3E%3Ccircle cx='100' cy='100' r='90' fill='%23f7fafc'/%3E%3Cpath class='st0' d='M70 60h60v80H70z'/%3E%3Cpath class='st1' d='M80 70h40v60H80z'/%3E%3Ccircle class='st2' cx='150' cy='60' r='20'/%3E%3Ccircle class='st3' cx='40' cy='50' r='15'/%3E%3Cpath class='st2' d='M25 120l30-15 30 15v30H25z'/%3E%3Ccircle class='st4' cx='100' cy='100' r='15'/%3E%3Cpath class='st4' d='M94 90h12v20H94zm-4-30h20v10H90z'/%3E%3C/svg%3E" alt="Learning Adventure" class="banner-img float">
+            </div>
         </div>
         
-        <div class="category-tabs">
-            <div class="category-tab active" data-category="all">All Games</div>
-            <!-- Folder tabs will be added dynamically -->
+        <div class="status-message" id="statusMessage"></div>
+        
+        <div class="controls-section">
+            <h3 class="controls-title">Find the Perfect Game</h3>
+            <div class="folder-buttons" id="folderButtons">
+                <button class="folder-btn active" data-folder="all">
+                    <i class="fas fa-folder-open"></i> All Games
+                </button>
+                <!-- Additional folder buttons will be added dynamically -->
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search games...">
+            </div>
         </div>
         
-        <div id="loading" class="loading">
-            <i class="fas fa-spinner"></i> Loading games...
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <p class="loading-text">Discovering games...</p>
         </div>
         
-        <div id="error" class="error" style="display: none;"></div>
-        
-        <div id="games-container" class="games-grid" style="display: none;"></div>
-        
-        <div id="no-games" class="no-games" style="display: none;">
-            <i class="fas fa-sad-tear"></i> No games found in this category.
+        <div id="gameGrid" class="game-grid">
+            <!-- Games will be listed here -->
         </div>
     </div>
     
     <footer>
-        <p>Discover, Play, and Have Fun! 🎮</p>
+        <div class="footer-content">
+            <div class="footer-logo">Interactive Mathematics Learning Center</div>
+            <p>Designed to foster mathematical thinking and problem-solving skills in young minds through engaging educational content.</p>
+        </div>
     </footer>
     
-    <!-- Game Launch Modal -->
-    <div id="game-modal" class="modal">
-        <div class="modal-content">
-            <div class="close-modal" id="close-modal"><i class="fas fa-times"></i></div>
-            <iframe id="game-frame" class="modal-frame" src="" allowfullscreen></iframe>
-        </div>
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
     </div>
-
+    
     <script>
-        // Configuration
-        const GAME_FOLDERS = []; // Will be populated dynamically
-        const DEFAULT_ICONS = {
-            "default": "fas fa-gamepad",
-            "puzzle": "fas fa-puzzle-piece",
-            "action": "fas fa-running",
-            "adventure": "fas fa-mountain",
-            "arcade": "fas fa-arcade",
-            "education": "fas fa-graduation-cap",
-            "sports": "fas fa-basketball-ball",
-            "strategy": "fas fa-chess",
-            "racing": "fas fa-car",
-            "platformer": "fas fa-shoe-prints",
-            "card": "fas fa-cards"
-        };
-        
-        // DOM Elements
-        const gamesContainer = document.getElementById('games-container');
-        const loadingElement = document.getElementById('loading');
-        const errorElement = document.getElementById('error');
-        const noGamesElement = document.getElementById('no-games');
-        const categoryTabs = document.querySelector('.category-tabs');
-        const modal = document.getElementById('game-modal');
-        const gameFrame = document.getElementById('game-frame');
-        const closeModal = document.getElementById('close-modal');
-        
-        // Game data
-        let allGames = [];
-        
-        // Helper function to get repository information from URL
-        function getRepoInfoFromUrl() {
-            const pathSegments = window.location.pathname.split('/');
-            let username, repoName;
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const gameGrid = document.getElementById('gameGrid');
+            const loadingContainer = document.getElementById('loadingContainer');
+            const folderButtons = document.getElementById('folderButtons');
+            const searchInput = document.getElementById('searchInput');
+            const themeToggle = document.getElementById('themeToggle');
+            const statusMessage = document.getElementById('statusMessage');
             
-            // For GitHub Pages
-            if (window.location.hostname.endsWith('github.io')) {
-                username = window.location.hostname.replace('.github.io', '');
-                repoName = pathSegments[1] || '';
-                return { username, repoName };
-            }
+            // State
+            let allGames = [];
+            let folders = new Set(['all']);
+            let currentFolder = 'all';
+            let currentSearch = '';
             
-            // For local development or other hosting
-            for (let i = 0; i < pathSegments.length; i++) {
-                if (pathSegments[i] === 'github.com' && i + 2 < pathSegments.length) {
-                    username = pathSegments[i + 1];
-                    repoName = pathSegments[i + 2];
-                    return { username, repoName };
-                }
-            }
+            // File extension to icon/type mapping
+            const fileInfo = {
+                'html': { icon: '🌐', type: 'Interactive Game' },
+                'pdf': { icon: '📄', type: 'PDF Activity' },
+                'js': { icon: '📜', type: 'JavaScript Game' },
+                'css': { icon: '🎨', type: 'Style Sheet' },
+                'jpg': { icon: '🖼️', type: 'Image' },
+                'jpeg': { icon: '🖼️', type: 'Image' },
+                'png': { icon: '🖼️', type: 'Image' },
+                'gif': { icon: '🎞️', type: 'Animation' },
+                'md': { icon: '📝', type: 'Markdown' },
+                'json': { icon: '🔧', type: 'JSON Data' },
+                'txt': { icon: '📝', type: 'Text Document' },
+                'svg': { icon: '🎯', type: 'Vector Graphic' },
+                'zip': { icon: '📦', type: 'Archive' },
+                'default': { icon: '📂', type: 'File' }
+            };
             
-            return { username: null, repoName: null };
-        }
-        
-        // Function to fetch repository contents
-        async function fetchRepoContents() {
-            try {
-                const { username, repoName } = getRepoInfoFromUrl();
+            // Helper Functions
+            
+            // Show a status message
+            function showStatus(message, type = 'info') {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status-message';
                 
-                if (!username || !repoName) {
-                    throw new Error('Could not determine repository information from URL.');
+                if (type === 'error') {
+                    statusMessage.classList.add('error');
+                } else if (type === 'success') {
+                    statusMessage.classList.add('success');
                 }
                 
-                // If we're running from GitHub Pages, we can't use the GitHub API directly due to CORS restrictions
-                // Instead, we'll try to infer the folder structure by looking for common patterns
+                statusMessage.style.display = 'block';
                 
-                // First, try to fetch the contents of the root directory
-                const rootResponse = await fetch(`/${repoName}/`);
-                
-                if (!rootResponse.ok) {
-                    // If we're running locally, try a different approach
-                    await discoverGamesLocally();
-                    return;
-                }
-                
-                // For GitHub Pages, we'll try to discover the two game folders
-                // by attempting to access common folder names
-                const potentialFolders = [
-                    'games', 'Games', 
-                    'puzzles', 'Puzzles', 
-                    'arcade', 'Arcade',
-                    'action', 'Action',
-                    'educational', 'Educational',
-                    'folder1', 'folder2'
-                ];
-                
-                // Check each potential folder
-                for (const folder of potentialFolders) {
-                    try {
-                        const folderResponse = await fetch(`/${repoName}/${folder}/`);
-                        if (folderResponse.ok) {
-                            GAME_FOLDERS.push(folder);
-                            if (GAME_FOLDERS.length >= 2) break; // We found our two folders
-                        }
-                    } catch (error) {
-                        console.log(`Folder ${folder} not found`);
-                    }
-                }
-                
-                // If we still didn't find any folders, set default ones
-                if (GAME_FOLDERS.length === 0) {
-                    GAME_FOLDERS.push('folder1', 'folder2');
-                }
-                
-                // Now discover games within these folders
-                await discoverGames();
-                
-            } catch (error) {
-                console.error('Error fetching repository contents:', error);
-                showError('Failed to load games. Please check the console for more details.');
-            }
-        }
-        
-        // Function to discover games locally
-        async function discoverGamesLocally() {
-            try {
-                // Try to fetch a manifest.json file if it exists
-                const manifestResponse = await fetch('./manifest.json');
-                
-                if (manifestResponse.ok) {
-                    const manifest = await manifestResponse.json();
-                    allGames = manifest.games || [];
-                    
-                    if (manifest.folders && manifest.folders.length > 0) {
-                        GAME_FOLDERS.push(...manifest.folders);
-                    } else if (allGames.length > 0) {
-                        // Extract folders from game paths
-                        const folders = new Set();
-                        allGames.forEach(game => {
-                            const pathParts = game.path.split('/');
-                            if (pathParts.length > 1) {
-                                folders.add(pathParts[0]);
-                            }
-                        });
-                        GAME_FOLDERS.push(...folders);
-                    }
-                    
-                    // Initialize the interface
-                    initializeInterface();
-                    return;
-                }
-                
-                // If no manifest.json, fall back to some defaults
-                GAME_FOLDERS.push('folder1', 'folder2');
-                
-                // Create some dummy games for testing
-                allGames = [
-                    {
-                        title: "Example Game 1",
-                        path: "folder1/game1.html",
-                        category: "folder1",
-                        description: "This is an example game.",
-                        icon: "puzzle"
-                    },
-                    {
-                        title: "Example Game 2",
-                        path: "folder2/game2.html",
-                        category: "folder2",
-                        description: "Another example game.",
-                        icon: "action"
-                    }
-                ];
-                
-                // Initialize the interface
-                initializeInterface();
-                
-            } catch (error) {
-                console.error('Error discovering games locally:', error);
-                showError('Failed to load games. Make sure your repository structure is correct.');
-            }
-        }
-        
-        // Function to discover games in the repository
-        async function discoverGames() {
-            allGames = [];
-            
-            for (const folder of GAME_FOLDERS) {
-                try {
-                    // For each folder, try to find index.html files (which are likely games)
-                    const { repoName } = getRepoInfoFromUrl();
-                    
-                    // Perform a HEAD request to check if the folder exists
-                    const folderCheckResponse = await fetch(`/${repoName}/${folder}/`, { method: 'HEAD' });
-                    
-                    if (!folderCheckResponse.ok) {
-                        continue; // Skip this folder if it doesn't exist
-                    }
-                    
-                    // We can't list directory contents easily on GitHub Pages without a server
-                    // So we'll try to discover games by attempting to look for common patterns
-                    
-                    // Try to find an index.html file in the folder
-                    const indexResponse = await fetch(`/${repoName}/${folder}/index.html`, { method: 'HEAD' });
-                    
-                    if (indexResponse.ok) {
-                        // Found an index.html, consider it a game
-                        allGames.push({
-                            title: capitalizeWords(folder) + " Game",
-                            path: `${folder}/index.html`,
-                            category: folder,
-                            description: "A fun game to play!",
-                            icon: guessGameIcon(folder)
-                        });
-                    }
-                    
-                    // Try to find common game file patterns
-                    const commonNames = ['game', 'play', 'main', 'start', 'puzzle', 'action'];
-                    
-                    for (const name of commonNames) {
-                        const gameResponse = await fetch(`/${repoName}/${folder}/${name}.html`, { method: 'HEAD' });
-                        
-                        if (gameResponse.ok) {
-                            allGames.push({
-                                title: capitalizeWords(`${folder} ${name}`),
-                                path: `${folder}/${name}.html`,
-                                category: folder,
-                                description: "A fun game to play!",
-                                icon: guessGameIcon(name)
-                            });
-                        }
-                    }
-                    
-                } catch (error) {
-                    console.error(`Error discovering games in folder ${folder}:`, error);
-                }
-            }
-            
-            // If we couldn't find any games automatically, create some placeholder entries
-            if (allGames.length === 0) {
-                for (const folder of GAME_FOLDERS) {
-                    allGames.push({
-                        title: capitalizeWords(folder) + " Game",
-                        path: `${folder}/index.html`,
-                        category: folder,
-                        description: "A fun game waiting to be discovered!",
-                        icon: guessGameIcon(folder)
-                    });
-                }
-            }
-            
-            // Initialize the interface
-            initializeInterface();
-        }
-        
-        // Function to capitalize words
-        function capitalizeWords(str) {
-            return str
-                .replace(/-/g, ' ')
-                .replace(/([A-Z])/g, ' $1')
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ')
-                .trim();
-        }
-        
-        // Function to guess game icon based on name or category
-        function guessGameIcon(name) {
-            name = name.toLowerCase();
-            
-            for (const [category, icon] of Object.entries(DEFAULT_ICONS)) {
-                if (name.includes(category)) {
-                    return category;
-                }
-            }
-            
-            return "default";
-        }
-        
-        // Function to initialize the interface
-        function initializeInterface() {
-            loadingElement.style.display = 'none';
-            gamesContainer.style.display = 'grid';
-            
-            // Display an error if no games were found
-            if (allGames.length === 0) {
-                showError('No games were found in the repository.');
-                return;
-            }
-            
-            // Create category tabs
-            createCategoryTabs();
-            
-            // Display all games by default
-            displayGamesByCategory('all');
-            
-            // Add event listeners
-            closeModal.addEventListener('click', closeGameModal);
-        }
-        
-        // Function to create category tabs
-        function createCategoryTabs() {
-            // Add tabs for each game folder
-            GAME_FOLDERS.forEach(folder => {
-                const tab = document.createElement('div');
-                tab.className = 'category-tab';
-                tab.textContent = capitalizeWords(folder);
-                tab.dataset.category = folder;
-                categoryTabs.appendChild(tab);
-                
-                // Add event listener
-                tab.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    document.querySelectorAll('.category-tab').forEach(t => {
-                        t.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-                    
-                    // Display games for this category
-                    displayGamesByCategory(this.dataset.category);
-                });
-            });
-            
-            // Add event listener to "All Games" tab
-            document.querySelector('.category-tab[data-category="all"]').addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.category-tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to this tab
-                this.classList.add('active');
-                
-                // Display all games
-                displayGamesByCategory('all');
-            });
-        }
-        
-        // Function to display games by category
-        function displayGamesByCategory(category) {
-            // Clear the container
-            gamesContainer.innerHTML = '';
-            
-            // Filter games by category
-            const filteredGames = category === 'all' 
-                ? allGames 
-                : allGames.filter(game => game.category === category);
-            
-            // Check if any games are available in this category
-            if (filteredGames.length === 0) {
-                noGamesElement.style.display = 'block';
-                gamesContainer.style.display = 'none';
-                return;
-            }
-            
-            noGamesElement.style.display = 'none';
-            gamesContainer.style.display = 'grid';
-            
-            // Create game cards
-            filteredGames.forEach((game, index) => {
-                // Create a card for each game with a slight delay for animation
+                // Hide after 5 seconds
                 setTimeout(() => {
-                    const card = createGameCard(game);
-                    gamesContainer.appendChild(card);
-                }, index * 100);
-            });
-        }
-        
-        // Function to create a game card
-        function createGameCard(game) {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            
-            // Get the appropriate icon
-            const iconClass = DEFAULT_ICONS[game.icon] || DEFAULT_ICONS.default;
-            
-            card.innerHTML = `
-                <div class="game-image">
-                    <i class="${iconClass}"></i>
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">${game.title}</h3>
-                    <p class="game-description">${game.description}</p>
-                    <button class="play-button">Play Now!</button>
-                </div>
-            `;
-            
-            // Add click event to the Play button
-            const playButton = card.querySelector('.play-button');
-            playButton.addEventListener('click', function(e) {
-                e.stopPropagation();
-                launchGame(game);
-            });
-            
-            // Add click event to the whole card
-            card.addEventListener('click', function() {
-                launchGame(game);
-            });
-            
-            return card;
-        }
-        
-        // Function to launch a game
-        function launchGame(game) {
-            // Get the repository name for forming the correct URL
-            const { repoName } = getRepoInfoFromUrl();
-            
-            // Form the full URL to the game
-            let gameUrl = game.path;
-            if (repoName) {
-                gameUrl = `/${repoName}/${game.path}`;
+                    statusMessage.style.display = 'none';
+                }, 5000);
             }
             
-            // Set the iframe source
-            gameFrame.src = gameUrl;
-            
-            // Show the modal
-            modal.style.display = 'flex';
-        }
-        
-        // Function to close the game modal
-        function closeGameModal() {
-            modal.style.display = 'none';
-            gameFrame.src = '';
-        }
-        
-        // Function to show an error message
-        function showError(message) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-            loadingElement.style.display = 'none';
-        }
-        
-        // Close modal if clicking outside the content
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeGameModal();
+            // Get file extension
+            function getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
             }
+            
+            // Get folder from path
+            function getFolderFromPath(path) {
+                const parts = path.split('/');
+                if (parts.length > 1) {
+                    return parts[0]; // First part is the folder
+                }
+                return 'root'; // No folder, in root
+            }
+            
+            // Prettify name
+            function prettifyName(filename) {
+                // Remove file extension
+                let name = filename.split('.').slice(0, -1).join('.');
+                
+                // Remove path if present
+                name = name.split('/').pop();
+                
+                // Replace hyphens and underscores with spaces
+                name = name.replace(/[-_]/g, ' ');
+                
+                // Remove version indicators
+                name = name.replace(/\s+v\d+/gi, '');
+                
+                // Capitalize first letter of each word
+                name = name.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+                
+                return name;
+            }
+            
+            // Get file icon and type
+            function getFileIconAndType(extension) {
+                if (fileInfo[extension]) {
+                    return fileInfo[extension];
+                }
+                return fileInfo.default;
+            }
+            
+            // Create game card element
+            function createGameCard(game, index) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                const fileData = getFileIconAndType(game.extension);
+                
+                card.innerHTML = `
+                    <div class="game-header">
+                        <span class="game-folder">${game.folder}</span>
+                        <span class="game-icon">${fileData.icon}</span>
+                        <h3 class="game-title">${game.displayName}</h3>
+                        <div class="game-type">${fileData.type}</div>
+                    </div>
+                    <div class="game-content">
+                        <p class="game-description">A fun ${fileData.type.toLowerCase()} waiting to be discovered! Explore interactive content designed for young learners.</p>
+                        <a href="${game.path}" target="_blank" class="game-link">Play Now!</a>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            // Filter games based on current folder and search
+            function filterGames() {
+                return allGames.filter(game => {
+                    // Filter by folder
+                    const folderMatch = currentFolder === 'all' || game.folder === currentFolder;
+                    
+                    // Filter by search
+                    const searchMatch = currentSearch === '' || 
+                                       game.displayName.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                                       game.path.toLowerCase().includes(currentSearch.toLowerCase());
+                    
+                    return folderMatch && searchMatch;
+                });
+            }
+            
+            // Render games to the grid
+            function renderGames() {
+                const filteredGames = filterGames();
+                gameGrid.innerHTML = '';
+                
+                if (filteredGames.length === 0) {
+                    const message = document.createElement('div');
+                    message.className = 'message';
+                    message.innerHTML = `
+                        <div class="message-icon">🔍</div>
+                        <h3 class="message-title">No Games Found</h3>
+                        <p class="message-text">Try changing your search or selecting a different folder.</p>
+                    `;
+                    gameGrid.appendChild(message);
+                    return;
+                }
+                
+                filteredGames.forEach((game, index) => {
+                    const card = createGameCard(game, index);
+                    gameGrid.appendChild(card);
+                });
+            }
+            
+            // Update folder buttons
+            function updateFolderButtons() {
+                // Clear existing buttons (except All Games)
+                const allButton = folderButtons.querySelector('[data-folder="all"]');
+                folderButtons.innerHTML = '';
+                folderButtons.appendChild(allButton);
+                
+                // Add a button for each folder
+                folders.forEach(folder => {
+                    if (folder !== 'all' && folder !== 'root') {
+                        const button = document.createElement('button');
+                        button.className = `folder-btn ${folder === currentFolder ? 'active' : ''}`;
+                        button.setAttribute('data-folder', folder);
+                        button.innerHTML = `<i class="fas fa-folder"></i> ${folder}`;
+                        
+                        button.addEventListener('click', function() {
+                            // Update active state
+                            document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            // Update current folder and render
+                            currentFolder = this.getAttribute('data-folder');
+                            renderGames();
+                        });
+                        
+                        folderButtons.appendChild(button);
+                    }
+                });
+                
+                // Ensure "All Games" button has correct active state
+                allButton.classList.toggle('active', currentFolder === 'all');
+                
+                // Add click event to "All Games" button
+                allButton.addEventListener('click', function() {
+                    document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFolder = 'all';
+                    renderGames();
+                });
+            }
+            
+            // Scan directory contents
+            function scanDirectory() {
+                loadingContainer.style.display = 'flex';
+                
+                // This function will use a reliable approach to discover files
+                const demoFiles = [
+                    'area-volume-game.html',
+                    'shapes/triangle-explorer-game.html',
+                    'unit-conversion-game.html', 
+                    'toddlers/math-zone.html',
+                    'patterns/binomial-blocks-game.html',
+                    'statistics-game.html',
+                    'advanced/calculus-game.html',
+                    'advanced/trig-adventure.html',
+                    'games/matching-tiles.html',
+                    'games/problem-solvers.html',
+                    'explore/world-explorer.html',
+                    'measurement-story.pdf'
+                ];
+                
+                // Process files manually
+                processFiles(demoFiles);
+                
+                // Make AJAX request to get actual files in the directory
+                // This uses the server directory listing capability
+                fetchDirectoryListing()
+                    .then(files => {
+                        if (files && files.length > 0) {
+                            processFiles(files);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching directory:', error);
+                        showStatus('Using demo content for preview. Create a directory-data.js file for production use.', 'info');
+                    })
+                    .finally(() => {
+                        loadingContainer.style.display = 'none';
+                    });
+            }
+            
+            // Process files into game objects
+            function processFiles(files) {
+                allGames = [];
+                folders = new Set(['all']);
+                
+                files.forEach(path => {
+                    // Skip index.html and non-content files
+                    if (path === 'index.html' || 
+                        path.startsWith('.') || 
+                        path === 'directory-data.js' ||
+                        path === 'styles.css') {
+                        return;
+                    }
+                    
+                    const folder = getFolderFromPath(path);
+                    if (folder !== 'root') {
+                        folders.add(folder);
+                    }
+                    
+                    const game = {
+                        path: path,
+                        displayName: prettifyName(path),
+                        folder: folder === 'root' ? 'Main' : folder,
+                        extension: getFileExtension(path)
+                    };
+                    
+                    allGames.push(game);
+                });
+                
+                // Update UI
+                updateFolderButtons();
+                renderGames();
+                loadingContainer.style.display = 'none';
+                
+                if (allGames.length === 0) {
+                    showSetupInstructions();
+                }
+            }
+            
+            // Fetch directory listing
+            async function fetchDirectoryListing() {
+                try {
+                    // First, try to load directory-data.js if it exists
+                    const script = document.createElement('script');
+                    script.src = 'directory-data.js';
+                    
+                    return new Promise((resolve, reject) => {
+                        script.onload = () => {
+                            // If the script defines window.directoryFiles, use those
+                            if (window.directoryFiles && Array.isArray(window.directoryFiles)) {
+                                resolve(window.directoryFiles);
+                            } else {
+                                reject(new Error('directory-data.js did not define directoryFiles'));
+                            }
+                        };
+                        
+                        script.onerror = () => {
+                            reject(new Error('Failed to load directory-data.js'));
+                        };
+                        
+                        document.head.appendChild(script);
+                    });
+                } catch (error) {
+                    console.error('Error loading directory data:', error);
+                    return [];
+                }
+            }
+            
+            // Show setup instructions
+            function showSetupInstructions() {
+                const instructions = document.createElement('div');
+                instructions.className = 'welcome-banner';
+                instructions.style.marginTop = '2rem';
+                
+                instructions.innerHTML = `
+                    <div class="banner-content">
+                        <h3 class="banner-title">Setup Your Game Portal</h3>
+                        <p class="banner-text">
+                            Create a <strong>directory-data.js</strong> file in your repository with this content:
+                        </p>
+                        <pre style="background-color: rgba(0,0,0,0.05); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; font-family: monospace;">
+// List all your files here
+window.directoryFiles = [
+    'game1.html',
+    'folder1/game2.html',
+    'folder2/activity.pdf',
+    'tutorial.html'
+];
+                        </pre>
+                        <p class="banner-text">
+                            This will allow the portal to automatically display your content.
+                        </p>
+                    </div>
+                `;
+                
+                document.querySelector('.container').appendChild(instructions);
+            }
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', function() {
+                currentSearch = this.value;
+                renderGames();
+            });
+            
+            // Initialize
+            scanDirectory();
         });
-        
-        // Initialize the portal
-        document.addEventListener('DOMContentLoaded', fetchRepoContents);
     </script>
 </body>
 </html>
