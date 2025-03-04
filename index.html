@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Math Learning Adventure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap');
+        
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #4cc9f0;
+            --accent: #f72585;
+            --accent-light: #ff6b95;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #4a5568;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --success: #48bb78;
+        }
+        
+        .dark-mode {
+            --background: #1a202c;
+            --card-bg: #2d3748;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --border: #4a5568;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 4rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #f0f4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .header-shapes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .header-shape {
+            position: absolute;
+            opacity: 0.1;
+            background-color: white;
+        }
+        
+        .shape-1 {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            top: -40px;
+            right: 10%;
+        }
+        
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            transform: rotate(45deg);
+            bottom: 20px;
+            right: 20%;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            border-radius: 30%;
+            top: 30%;
+            right: 5%;
+        }
+        
+        /* Controls */
+        .controls-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        
+        .controls-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .folder-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .folder-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .folder-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .folder-btn:hover, .folder-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+        }
+        
+        .search-box {
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: the primary;
+            gap: 2rem;
+        }
+        
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+            position: relative;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-header {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .game-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .game-folder {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: white;
+        }
+        
+        .game-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            z-index: 1;
+        }
+        
+        .game-type {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        
+        .game-content {
+            padding: 1.5rem;
+        }
+        
+        .game-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 4.8rem;
+        }
+        
+        .game-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .game-link:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(247, 37, 133, 0.3);
+        }
+        
+        /* Banner */
+        .welcome-banner {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(67, 97, 238, 0.05) 0%, rgba(67, 97, 238, 0) 70%);
+            z-index: 0;
+        }
+        
+        .banner-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner-title {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.7rem;
+        }
+        
+        .banner-text {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .banner-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .banner-btn:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.3);
+        }
+        
+        .banner-image {
+            margin-left: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+        }
+        
+        /* Loading and Message States */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-text {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        .message {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            margin: 2rem 0;
+        }
+        
+        .message-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .message-title {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .message-text {
+            color: var(--text-light);
+        }
+        
+        /* Status Message */
+        .status-message {
+            background-color: #EBF8FF;
+            border-left: 4px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .status-message.error {
+            background-color: #FFF5F5;
+            border-left-color: #F56565;
+            color: #C53030;
+        }
+        
+        .status-message.success {
+            background-color: #F0FFF4;
+            border-left-color: var(--success);
+            color: var(--success);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pulse {
+            animation: pulse 2.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .float {
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .banner-image {
+                display: none;
+            }
+            
+            .welcome-banner {
+                text-align: center;
+            }
+            
+            .theme-toggle {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-shapes">
+            <div class="header-shape shape-1"></div>
+            <div class="header-shape shape-2"></div>
+            <div class="header-shape shape-3"></div>
+        </div>
+        <div class="header-content">
+            <h1>Interactive Mathematics Learning Center</h1>
+            <p>Engaging educational games designed to make learning mathematics fun and effective for young minds.</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="welcome-banner">
+            <div class="banner-bg"></div>
+            <div class="banner-content">
+                <h3 class="banner-title">Welcome to our Learning Adventure!</h3>
+                <p class="banner-text">Our educational games combine fun and learning to help young minds develop strong mathematical foundations while enjoying themselves.</p>
+                <a href="#games" class="banner-btn pulse">Explore Games</a>
+            </div>
+            <div class="banner-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cstyle%3E.st0%7Bfill:%234361ee%7D.st1%7Bfill:%234895ef%7D.st2%7Bfill:%23f72585%7D.st3%7Bfill:%234cc9f0%7D.st4%7Bfill:%23fff%7D%3C/style%3E%3Ccircle cx='100' cy='100' r='90' fill='%23f7fafc'/%3E%3Cpath class='st0' d='M70 60h60v80H70z'/%3E%3Cpath class='st1' d='M80 70h40v60H80z'/%3E%3Ccircle class='st2' cx='150' cy='60' r='20'/%3E%3Ccircle class='st3' cx='40' cy='50' r='15'/%3E%3Cpath class='st2' d='M25 120l30-15 30 15v30H25z'/%3E%3Ccircle class='st4' cx='100' cy='100' r='15'/%3E%3Cpath class='st4' d='M94 90h12v20H94zm-4-30h20v10H90z'/%3E%3C/svg%3E" alt="Learning Adventure" class="banner-img float">
+            </div>
+        </div>
+        
+        <div class="status-message" id="statusMessage"></div>
+        
+        <div class="controls-section">
+            <h3 class="controls-title">Find the Perfect Game</h3>
+            <div class="folder-buttons" id="folderButtons">
+                <button class="folder-btn active" data-folder="all">
+                    <i class="fas fa-folder-open"></i> All Games
+                </button>
+                <!-- Additional folder buttons will be added dynamically -->
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search games...">
+            </div>
+        </div>
+        
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <p class="loading-text">Discovering games...</p>
+        </div>
+        
+        <div id="gameGrid" class="game-grid">
+            <!-- Games will be listed here -->
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Interactive Mathematics Learning Center</div>
+            <p>Designed to foster mathematical thinking and problem-solving skills in young minds through engaging educational content.</p>
+        </div>
+    </footer>
+    
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const gameGrid = document.getElementById('gameGrid');
+            const loadingContainer = document.getElementById('loadingContainer');
+            const folderButtons = document.getElementById('folderButtons');
+            const searchInput = document.getElementById('searchInput');
+            const themeToggle = document.getElementById('themeToggle');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // State
+            let allGames = [];
+            let folders = new Set(['all']);
+            let currentFolder = 'all';
+            let currentSearch = '';
+            
+            // File extension to icon/type mapping
+            const fileInfo = {
+                'html': { icon: '🌐', type: 'Interactive Game' },
+                'pdf': { icon: '📄', type: 'PDF Activity' },
+                'js': { icon: '📜', type: 'JavaScript Game' },
+                'css': { icon: '🎨', type: 'Style Sheet' },
+                'jpg': { icon: '🖼️', type: 'Image' },
+                'jpeg': { icon: '🖼️', type: 'Image' },
+                'png': { icon: '🖼️', type: 'Image' },
+                'gif': { icon: '🎞️', type: 'Animation' },
+                'md': { icon: '📝', type: 'Markdown' },
+                'json': { icon: '🔧', type: 'JSON Data' },
+                'txt': { icon: '📝', type: 'Text Document' },
+                'svg': { icon: '🎯', type: 'Vector Graphic' },
+                'zip': { icon: '📦', type: 'Archive' },
+                'default': { icon: '📂', type: 'File' }
+            };
+            
+            // Helper Functions
+            
+            // Show a status message
+            function showStatus(message, type = 'info') {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status-message';
+                
+                if (type === 'error') {
+                    statusMessage.classList.add('error');
+                } else if (type === 'success') {
+                    statusMessage.classList.add('success');
+                }
+                
+                statusMessage.style.display = 'block';
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Get file extension
+            function getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
+            }
+            
+            // Get folder from path
+            function getFolderFromPath(path) {
+                const parts = path.split('/');
+                if (parts.length > 1) {
+                    return parts[0]; // First part is the folder
+                }
+                return 'root'; // No folder, in root
+            }
+            
+            // Prettify name
+            function prettifyName(filename) {
+                // Remove file extension
+                let name = filename.split('.').slice(0, -1).join('.');
+                
+                // Remove path if present
+                name = name.split('/').pop();
+                
+                // Replace hyphens and underscores with spaces
+                name = name.replace(/[-_]/g, ' ');
+                
+                // Remove version indicators
+                name = name.replace(/\s+v\d+/gi, '');
+                
+                // Capitalize first letter of each word
+                name = name.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+                
+                return name;
+            }
+            
+            // Get file icon and type
+            function getFileIconAndType(extension) {
+                if (fileInfo[extension]) {
+                    return fileInfo[extension];
+                }
+                return fileInfo.default;
+            }
+            
+            // Create game card element
+            function createGameCard(game, index) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                const fileData = getFileIconAndType(game.extension);
+                
+                card.innerHTML = `
+                    <div class="game-header">
+                        <span class="game-folder">${game.folder}</span>
+                        <span class="game-icon">${fileData.icon}</span>
+                        <h3 class="game-title">${game.displayName}</h3>
+                        <div class="game-type">${fileData.type}</div>
+                    </div>
+                    <div class="game-content">
+                        <p class="game-description">A fun ${fileData.type.toLowerCase()} waiting to be discovered! Explore interactive content designed for young learners.</p>
+                        <a href="${game.path}" target="_blank" class="game-link">Play Now!</a>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            // Filter games based on current folder and search
+            function filterGames() {
+                return allGames.filter(game => {
+                    // Filter by folder
+                    const folderMatch = currentFolder === 'all' || game.folder === currentFolder;
+                    
+                    // Filter by search
+                    const searchMatch = currentSearch === '' || 
+                                       game.displayName.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                                       game.path.toLowerCase().includes(currentSearch.toLowerCase());
+                    
+                    return folderMatch && searchMatch;
+                });
+            }
+            
+            // Render games to the grid
+            function renderGames() {
+                const filteredGames = filterGames();
+                gameGrid.innerHTML = '';
+                
+                if (filteredGames.length === 0) {
+                    const message = document.createElement('div');
+                    message.className = 'message';
+                    message.innerHTML = `
+                        <div class="message-icon">🔍</div>
+                        <h3 class="message-title">No Games Found</h3>
+                        <p class="message-text">Try changing your search or selecting a different folder.</p>
+                    `;
+                    gameGrid.appendChild(message);
+                    return;
+                }
+                
+                filteredGames.forEach((game, index) => {
+                    const card = createGameCard(game, index);
+                    gameGrid.appendChild(card);
+                });
+            }
+            
+            // Update folder buttons
+            function updateFolderButtons() {
+                // Clear existing buttons (except All Games)
+                const allButton = folderButtons.querySelector('[data-folder="all"]');
+                folderButtons.innerHTML = '';
+                folderButtons.appendChild(allButton);
+                
+                // Add a button for each folder
+                folders.forEach(folder => {
+                    if (folder !== 'all' && folder !== 'root') {
+                        const button = document.createElement('button');
+                        button.className = `folder-btn ${folder === currentFolder ? 'active' : ''}`;
+                        button.setAttribute('data-folder', folder);
+                        button.innerHTML = `<i class="fas fa-folder"></i> ${folder}`;
+                        
+                        button.addEventListener('click', function() {
+                            // Update active state
+                            document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            // Update current folder and render
+                            currentFolder = this.getAttribute('data-folder');
+                            renderGames();
+                        });
+                        
+                        folderButtons.appendChild(button);
+                    }
+                });
+                
+                // Ensure "All Games" button has correct active state
+                allButton.classList.toggle('active', currentFolder === 'all');
+                
+                // Add click event to "All Games" button
+                allButton.addEventListener('click', function() {
+                    document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFolder = 'all';
+                    renderGames();
+                });
+            }
+            
+            // Scan directory contents
+            function scanDirectory() {
+                loadingContainer.style.display = 'flex';
+                
+                // This function will use a reliable approach to discover files
+                const demoFiles = [
+                    'area-volume-game.html',
+                    'shapes/triangle-explorer-game.html',
+                    'unit-conversion-game.html', 
+                    'toddlers/math-zone.html',
+                    'patterns/binomial-blocks-game.html',
+                    'statistics-game.html',
+                    'advanced/calculus-game.html',
+                    'advanced/trig-adventure.html',
+                    'games/matching-tiles.html',
+                    'games/problem-solvers.html',
+                    'explore/world-explorer.html',
+                    'measurement-story.pdf'
+                ];
+                
+                // Process files manually
+                processFiles(demoFiles);
+                
+                // Make AJAX request to get actual files in the directory
+                // This uses the server directory listing capability
+                fetchDirectoryListing()
+                    .then(files => {
+                        if (files && files.length > 0) {
+                            processFiles(files);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching directory:', error);
+                        showStatus('Using demo content for preview. Create a directory-data.js file for production use.', 'info');
+                    })
+                    .finally(() => {
+                        loadingContainer.style.display = 'none';
+                    });
+            }
+            
+            // Process files into game objects
+            function processFiles(files) {
+                allGames = [];
+                folders = new Set(['all']);
+                
+                files.forEach(path => {
+                    // Skip index.html and non-content files
+                    if (path === 'index.html' || 
+                        path.startsWith('.') || 
+                        path === 'directory-data.js' ||
+                        path === 'styles.css') {
+                        return;
+                    }
+                    
+                    const folder = getFolderFromPath(path);
+                    if (folder !== 'root') {
+                        folders.add(folder);
+                    }
+                    
+                    const game = {
+                        path: path,
+                        displayName: prettifyName(path),
+                        folder: folder === 'root' ? 'Main' : folder,
+                        extension: getFileExtension(path)
+                    };
+                    
+                    allGames.push(game);
+                });
+                
+                // Update UI
+                updateFolderButtons();
+                renderGames();
+                loadingContainer.style.display = 'none';
+                
+                if (allGames.length === 0) {
+                    showSetupInstructions();
+                }
+            }
+            
+            // Fetch directory listing
+            async function fetchDirectoryListing() {
+                try {
+                    // First, try to load directory-data.js if it exists
+                    const script = document.createElement('script');
+                    script.src = 'directory-data.js';
+                    
+                    return new Promise((resolve, reject) => {
+                        script.onload = () => {
+                            // If the script defines window.directoryFiles, use those
+                            if (window.directoryFiles && Array.isArray(window.directoryFiles)) {
+                                resolve(window.directoryFiles);
+                            } else {
+                                reject(new Error('directory-data.js did not define directoryFiles'));
+                            }
+                        };
+                        
+                        script.onerror = () => {
+                            reject(new Error('Failed to load directory-data.js'));
+                        };
+                        
+                        document.head.appendChild(script);
+                    });
+                } catch (error) {
+                    console.error('Error loading directory data:', error);
+                    return [];
+                }
+            }
+            
+            // Show setup instructions
+            function showSetupInstructions() {
+                const instructions = document.createElement('div');
+                instructions.className = 'welcome-banner';
+                instructions.style.marginTop = '2rem';
+                
+                instructions.innerHTML = `
+                    <div class="banner-content">
+                        <h3 class="banner-title">Setup Your Game Portal</h3>
+                        <p class="banner-text">
+                            Create a <strong>directory-data.js</strong> file in your repository with this content:
+                        </p>
+                        <pre style="background-color: rgba(0,0,0,0.05); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; font-family: monospace;">
+// List all your files here
+window.directoryFiles = [
+    'game1.html',
+    'folder1/game2.html',
+    'folder2/activity.pdf',
+    'tutorial.html'
+];
+                        </pre>
+                        <p class="banner-text">
+                            This will allow the portal to automatically display your content.
+                        </p>
+                    </div>
+                `;
+                
+                document.querySelector('.container').appendChild(instructions);
+            }
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', function() {
+                currentSearch = this.value;
+                renderGames();
+            });
+            
+            // Initialize
+            scanDirectory();
+        });
+    </script>
+</body>
+</html>
