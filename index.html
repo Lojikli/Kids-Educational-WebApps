@@ -299,10 +299,13 @@
                     // Create game description based on the name
                     const description = generateDescription(game.name);
                     
+                    // Create the correct GitHub Pages URL for the game
+                    const gamePageUrl = `https://lojikli.github.io/Kids-Educational-WebApps/${encodeURIComponent(game.name)}`;
+                    
                     const gameCard = document.createElement('div');
                     gameCard.className = 'game-card';
                     gameCard.innerHTML = `
-                        <a href="${game.html_url.replace('https://github.com/lojikli/Kids-Educational-WebApps/blob/main/', 'https://lojikli.github.io/Kids-Educational-WebApps/')}" target="_blank">
+                        <a href="${gamePageUrl}" target="_blank">
                             <div class="game-title">${readableTitle}</div>
                             <div class="game-description">${description}</div>
                             <span class="game-tag">${game.category}</span>
