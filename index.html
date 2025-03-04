@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Mathematics Learning Center</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap');
         
@@ -19,26 +19,28 @@
             --text-light: #4a5568;
             --border: #e2e8f0;
             --shadow: rgba(0, 0, 0, 0.1);
-            
-            /* New color variables */
-            --numbers-gradient-start: #3182ce;
-            --numbers-gradient-end: #63b3ed;
-            --shapes-gradient-start: #38b2ac;
-            --shapes-gradient-end: #4fd1c5;
-            --advanced-gradient-start: #805ad5;
-            --advanced-gradient-end: #b794f4;
-            --puzzles-gradient-start: #dd6b20;
-            --puzzles-gradient-end: #f6ad55;
-            --games-gradient-start: #2f855a;
-            --games-gradient-end: #68d391;
-            --discovery-gradient-start: #c53030;
-            --discovery-gradient-end: #fc8181;
+            --module-numbers: linear-gradient(135deg, #3182ce 0%, #63b3ed 100%);
+            --module-shapes: linear-gradient(135deg, #38b2ac 0%, #4fd1c5 100%);
+            --module-advanced: linear-gradient(135deg, #805ad5 0%, #b794f4 100%);
+            --module-puzzles: linear-gradient(135deg, #dd6b20 0%, #f6ad55 100%);
+            --module-games: linear-gradient(135deg, #2f855a 0%, #68d391 100%);
+            --module-discovery: linear-gradient(135deg, #c53030 0%, #fc8181 100%);
+        }
+        
+        .dark-mode {
+            --background: #1a202c;
+            --card-bg: #2d3748;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --border: #4a5568;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         body {
@@ -46,8 +48,7 @@
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
-            padding-bottom: 2rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-bottom: 4rem;
         }
         
         .container {
@@ -62,9 +63,7 @@
             padding: 2rem 0;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px var(--shadow);
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px var(--shadow);
         }
         
         .header-content {
@@ -136,156 +135,54 @@
             right: 5%;
         }
         
-        /* Improved age filter */
-        .controls-container {
+        /* Controls section */
+        .controls-section {
             background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
-            margin: 2rem 0;
+            border-radius: 12px;
             padding: 1.5rem;
-            transition: background-color 0.3s ease;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px var(--shadow);
         }
         
-        .control-section {
+        .controls-title {
+            font-size: 1.3rem;
+            color: var(--primary);
             margin-bottom: 1rem;
         }
         
-        .control-section:last-child {
-            margin-bottom: 0;
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
         }
         
-        .control-title {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .control-title i {
-            margin-right: 0.5rem;
+        @media (min-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
         
         .age-filter {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
-            flex-wrap: wrap;
         }
         
-        .age-btn {
-            background-color: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .search-filter {
             display: flex;
             align-items: center;
-        }
-        
-        .age-btn i {
-            margin-right: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .age-btn:hover, .age-btn.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 4px 6px rgba(43, 108, 176, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .age-btn.toddler {
-            border-color: var(--puzzles-gradient-start);
-        }
-        
-        .age-btn.toddler:hover, .age-btn.toddler.active {
-            background-color: var(--puzzles-gradient-start);
-            border-color: var(--puzzles-gradient-start);
-            box-shadow: 0 4px 6px rgba(221, 107, 32, 0.2);
-        }
-        
-        .age-btn.kindergarten {
-            border-color: var(--shapes-gradient-start);
-        }
-        
-        .age-btn.kindergarten:hover, .age-btn.kindergarten.active {
-            background-color: var(--shapes-gradient-start);
-            border-color: var(--shapes-gradient-start);
-            box-shadow: 0 4px 6px rgba(56, 178, 172, 0.2);
-        }
-        
-        /* Repository controls */
-        .repo-controls {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .repo-input {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.75rem 1rem;
-            border-radius: 50px;
-            border: 2px solid var(--border);
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text);
-            background-color: var(--card-bg);
-            transition: all 0.3s ease;
-        }
-        
-        .repo-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
-        }
-        
-        .repo-btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            border: none;
-            background-color: var(--primary);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-        
-        .repo-btn i {
-            margin-right: 0.5rem;
-        }
-        
-        .repo-btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(43, 108, 176, 0.3);
-        }
-        
-        /* Search input */
-        .search-container {
             position: relative;
-            margin-top: 1rem;
         }
         
         .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 3rem;
-            border-radius: 50px;
+            flex: 1;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
             border: 2px solid var(--border);
+            border-radius: 50px;
             font-family: 'Nunito', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text);
+            font-size: 1rem;
             background-color: var(--card-bg);
+            color: var(--text);
             transition: all 0.3s ease;
         }
         
@@ -297,58 +194,123 @@
         
         .search-icon {
             position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
+            left: 0.8rem;
             color: var(--text-light);
         }
         
-        /* Module grid improvements */
+        .age-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .age-btn:hover, .age-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 6px rgba(43, 108, 176, 0.2);
+        }
+        
+        .age-btn.toddler {
+            border-color: #f6ad55;
+        }
+        
+        .age-btn.toddler:hover, .age-btn.toddler.active {
+            background-color: #f6ad55;
+            border-color: #f6ad55;
+            box-shadow: 0 4px 6px rgba(246, 173, 85, 0.2);
+        }
+        
+        .age-btn.kindergarten {
+            border-color: #4fd1c5;
+        }
+        
+        .age-btn.kindergarten:hover, .age-btn.kindergarten.active {
+            background-color: #4fd1c5;
+            border-color: #4fd1c5;
+            box-shadow: 0 4px 6px rgba(79, 209, 197, 0.2);
+        }
+        
+        /* Loading spinner */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-text {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Module grid */
         .module-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
         
         .module {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 20px var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
-            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
         }
         
         .module:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-            z-index: 2;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
         
         .module-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            padding: 1.8rem;
+            background: var(--module-numbers);
+            padding: 1.5rem;
             position: relative;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .module-icon {
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
-            font-size: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .module-title {
             color: white;
             margin: 0;
             font-size: 1.5rem;
-            padding-right: 2.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-right: 2rem;
         }
         
         .module-age {
@@ -359,36 +321,26 @@
             border-radius: 20px;
             font-size: 0.8rem;
             color: white;
-            backdrop-filter: blur(4px);
         }
         
         .game-list {
             list-style: none;
             padding: 1.5rem;
-            max-height: 400px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-light) var(--border);
-        }
-        
-        .game-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .game-list::-webkit-scrollbar-track {
-            background: var(--border);
-            border-radius: 10px;
-        }
-        
-        .game-list::-webkit-scrollbar-thumb {
-            background-color: var(--primary-light);
-            border-radius: 10px;
+            min-height: 200px;
         }
         
         .game-item {
             margin-bottom: 0.75rem;
-            transition: all 0.2s ease;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
         }
+        
+        .game-item:nth-child(1) { animation-delay: 0.1s; }
+        .game-item:nth-child(2) { animation-delay: 0.2s; }
+        .game-item:nth-child(3) { animation-delay: 0.3s; }
+        .game-item:nth-child(4) { animation-delay: 0.4s; }
+        .game-item:nth-child(5) { animation-delay: 0.5s; }
         
         .game-item:last-child {
             margin-bottom: 0;
@@ -400,7 +352,7 @@
             text-decoration: none;
             color: var(--text);
             padding: 0.75rem 1rem;
-            border-radius: 10px;
+            border-radius: 8px;
             transition: all 0.2s ease;
             background-color: rgba(0, 0, 0, 0.02);
             border-left: 3px solid transparent;
@@ -423,134 +375,107 @@
             color: white;
             border-radius: 8px;
             font-size: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
-        }
-        
-        .game-details {
-            flex: 1;
         }
         
         .game-name {
             font-weight: 600;
-            display: block;
-            font-size: 0.95rem;
-        }
-        
-        .game-description {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 0.2rem;
-        }
-        
-        .game-meta {
-            display: flex;
-            align-items: center;
-            margin-top: 0.3rem;
-            font-size: 0.75rem;
-            color: var(--text-light);
         }
         
         .game-type {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-left: auto;
+            padding-left: 1rem;
         }
         
-        .game-type i {
-            margin-right: 0.25rem;
-            font-size: 0.7rem;
-        }
-        
-        .game-size {
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .game-size i {
-            margin-right: 0.25rem;
-            font-size: 0.7rem;
-        }
-        
-        /* Module color variations with enhanced gradients */
+        /* Module color variations */
         .module.numbers .module-header {
-            background: linear-gradient(135deg, var(--numbers-gradient-start) 0%, var(--numbers-gradient-end) 100%);
+            background: var(--module-numbers);
         }
         
         .module.shapes .module-header {
-            background: linear-gradient(135deg, var(--shapes-gradient-start) 0%, var(--shapes-gradient-end) 100%);
+            background: var(--module-shapes);
         }
         
         .module.advanced .module-header {
-            background: linear-gradient(135deg, var(--advanced-gradient-start) 0%, var(--advanced-gradient-end) 100%);
+            background: var(--module-advanced);
         }
         
         .module.puzzles .module-header {
-            background: linear-gradient(135deg, var(--puzzles-gradient-start) 0%, var(--puzzles-gradient-end) 100%);
+            background: var(--module-puzzles);
         }
         
         .module.games .module-header {
-            background: linear-gradient(135deg, var(--games-gradient-start) 0%, var(--games-gradient-end) 100%);
+            background: var(--module-games);
         }
         
         .module.discovery .module-header {
-            background: linear-gradient(135deg, var(--discovery-gradient-start) 0%, var(--discovery-gradient-end) 100%);
+            background: var(--module-discovery);
         }
         
         /* Match game icons to modules */
         .module.numbers .game-icon {
-            background-color: var(--numbers-gradient-end);
+            background-color: #63b3ed;
         }
         
         .module.shapes .game-icon {
-            background-color: var(--shapes-gradient-end);
+            background-color: #4fd1c5;
         }
         
         .module.advanced .game-icon {
-            background-color: var(--advanced-gradient-end);
+            background-color: #b794f4;
         }
         
         .module.puzzles .game-icon {
-            background-color: var(--puzzles-gradient-end);
+            background-color: #f6ad55;
         }
         
         .module.games .game-icon {
-            background-color: var(--games-gradient-end);
+            background-color: #68d391;
         }
         
         .module.discovery .game-icon {
-            background-color: var(--discovery-gradient-end);
+            background-color: #fc8181;
         }
         
-        /* Enhanced footer */
+        /* No results message */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        
+        .no-results-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .no-results-title {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .no-results-msg {
+            color: var(--text-light);
+        }
+        
         footer {
             background-color: var(--card-bg);
-            padding: 3rem 0;
+            padding: 2rem 0;
             text-align: center;
             border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            transition: background-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .footer-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.05;
-            background-image: radial-gradient(circle at 10% 20%, var(--primary-light) 0%, transparent 50%),
-                             radial-gradient(circle at 90% 80%, var(--secondary) 0%, transparent 50%);
-            z-index: 0;
+            margin-top: 3rem;
         }
         
         .footer-content {
             max-width: 800px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
         
         .footer-logo {
@@ -559,152 +484,19 @@
             color: var(--primary);
             margin-bottom: 1rem;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
         }
         
-        .footer-description {
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .social-link.github {
-            background-color: #333;
-        }
-        
-        .social-link.twitter {
-            background-color: #1DA1F2;
-        }
-        
-        .social-link.youtube {
-            background-color: #FF0000;
-        }
-        
-        /* Loading indicator */
-        .loading-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 0;
-            flex-direction: column;
-        }
-        
-        .loader {
-            border: 5px solid rgba(0, 0, 0, 0.1);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-        
-        .loading-text {
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* No content state */
-        .no-content {
-            text-align: center;
-            padding: 4rem 2rem;
+        /* Interactive welcome banner */
+        .welcome-banner {
             background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 4px 10px var(--shadow);
-            margin: 3rem 0;
-        }
-        
-        .no-content-icon {
-            font-size: 4rem;
-            color: var(--text-light);
-            opacity: 0.5;
-            margin-bottom: 1rem;
-        }
-        
-        .no-content-title {
-            font-size: 1.5rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-        
-        .no-content-message {
-            color: var(--text-light);
-            max-width: 500px;
-            margin: 0 auto 1.5rem;
-        }
-        
-        .no-content-btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-        }
-        
-        .no-content-btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Interactive elements */
-        .interactive-banner {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0 3rem;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0 2rem;
             display: flex;
             align-items: center;
-            box-shadow: 0 8px 20px var(--shadow);
-            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow);
             position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-        }
-        
-        .interactive-banner:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
         }
         
         .banner-bg {
@@ -713,8 +505,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 0% 0%, rgba(237, 137, 54, 0.1) 0%, transparent 60%),
-                             radial-gradient(circle at 100% 100%, rgba(49, 130, 206, 0.1) 0%, transparent 60%);
+            background: linear-gradient(45deg, rgba(49, 130, 206, 0.05) 0%, rgba(49, 130, 206, 0) 70%);
             z-index: 0;
         }
         
@@ -727,12 +518,7 @@
         .banner-title {
             color: var(--primary);
             margin-bottom: 0.75rem;
-            font-size: 1.8rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
+            font-size: 1.7rem;
         }
         
         .banner-text {
@@ -743,57 +529,34 @@
         
         .banner-btn {
             display: inline-block;
-            background: linear-gradient(to right, var(--accent), #f6ad55);
+            background-color: var(--accent);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .banner-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #f6ad55, var(--accent));
-            z-index: -1;
-            transition: opacity 0.3s ease;
-            opacity: 0;
         }
         
         .banner-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(237, 137, 54, 0.3);
-        }
-        
-        .banner-btn:hover::before {
-            opacity: 1;
+            background-color: #dd6b20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(237, 137, 54, 0.3);
         }
         
         .banner-image {
             margin-left: 2rem;
-            width: 180px;
-            height: 180px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
             position: relative;
             z-index: 1;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
         }
         
-        /* Theme toggle enhanced */
+        .banner-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+        }
+        
+        /* Theme toggle */
         .theme-toggle {
             position: fixed;
             bottom: 2rem;
@@ -809,115 +572,12 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             font-size: 1.2rem;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             z-index: 100;
-            border: none;
         }
         
         .theme-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            .interactive-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .banner-image {
-                margin: 2rem 0 0;
-                width: 150px;
-                height: 150px;
-            }
-            
-            .age-filter {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .theme-toggle {
-                bottom: 1.5rem;
-                right: 1.5rem;
-                width: 45px;
-                height: 45px;
-            }
-            
-            .module-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .repo-controls {
-                flex-direction: column;
-            }
-            
-            .repo-input {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .module-header {
-                padding: 1.5rem;
-            }
-            
-            .module-title {
-                font-size: 1.3rem;
-            }
-            
-            .interactive-banner {
-                padding: 1.5rem;
-            }
-            
-            .banner-title {
-                font-size: 1.5rem;
-            }
-            
-            .banner-image {
-                width: 120px;
-                height: 120px;
-                font-size: 4rem;
-            }
-        }
-        
-        /* Dark mode */
-        body.dark-mode {
-            --background: #1a202c;
-            --card-bg: #2d3748;
-            --text: #f7fafc;
-            --text-light: #e2e8f0;
-            --border: #4a5568;
-            --shadow: rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Subtle animations */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .float {
-            animation: float 3s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            transform: scale(1.1);
         }
         
         /* Animation classes */
@@ -930,81 +590,98 @@
             animation: fadeIn 0.5s ease forwards;
         }
         
-        /* Toast notifications */
-        .toast-container {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-width: 300px;
+        /* Pulse animation */
+        .pulse {
+            animation: pulse 2.5s infinite;
         }
         
-        .toast {
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .float {
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        /* Stats counter */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .stat-card {
             background-color: var(--card-bg);
-            color: var(--text);
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
-            max-width: 100%;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes fadeOut {
-            from { opacity: 1; max-height: 100px; margin-bottom: 0.5rem; }
-            to { opacity: 0; max-height: 0; margin-bottom: 0; }
-        }
-        
-        .toast.success {
-            border-left: 4px solid #38a169;
-        }
-        
-        .toast.error {
-            border-left: 4px solid #e53e3e;
-        }
-        
-        .toast.info {
-            border-left: 4px solid #3182ce;
-        }
-        
-        .toast-icon {
-            font-size: 1.2rem;
-            margin-right: 0.75rem;
-        }
-        
-        .toast.success .toast-icon {
-            color: #38a169;
-        }
-        
-        .toast.error .toast-icon {
-            color: #e53e3e;
-        }
-        
-        .toast.info .toast-icon {
-            color: #3182ce;
-        }
-        
-        .toast-message {
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-width: 180px;
             flex: 1;
-            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
         }
         
-        .toast-close {
-            background: none;
-            border: none;
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .stat-label {
             color: var(--text-light);
-            cursor: pointer;
             font-size: 1rem;
-            margin-left: 0.5rem;
+        }
+        
+        /* Status message */
+        .status-message {
+            background-color: #ebf8ff;
+            border-left: 4px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .banner-image {
+                display: none;
+            }
+            
+            .welcome-banner {
+                text-align: center;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .theme-toggle {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1022,234 +699,482 @@
     </header>
     
     <div class="container">
-        <!-- Controls section -->
-        <div class="controls-container">
-            <!-- Repository input section -->
-            <div class="control-section">
-                <div class="control-title">
-                    <i class="fas fa-code-branch"></i> GitHub Repository
-                </div>
-                <div class="repo-controls">
-                    <input type="text" id="repoOwner" class="repo-input" placeholder="GitHub Username" value="">
-                    <input type="text" id="repoName" class="repo-input" placeholder="Repository Name" value="">
-                    <button id="loadRepoBtn" class="repo-btn">
-                        <i class="fas fa-sync-alt"></i> Load Files
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Age filter section -->
-            <div class="control-section">
-                <div class="control-title">
-                    <i class="fas fa-child"></i> Age Filter
-                </div>
-                <div class="age-filter">
-                    <button class="age-btn all active">
-                        <i class="fas fa-users"></i> All Ages
-                    </button>
-                    <button class="age-btn toddler">
-                        <i class="fas fa-baby"></i> Toddlers (2-3 years)
-                    </button>
-                    <button class="age-btn kindergarten">
-                        <i class="fas fa-child"></i> Early Learners (4-5 years)
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Search section -->
-            <div class="control-section">
-                <div class="control-title">
-                    <i class="fas fa-search"></i> Search Games
-                </div>
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search by name, topic, or file type...">
-                </div>
-            </div>
-        </div>
-        
-        <div class="interactive-banner">
+        <div class="welcome-banner">
             <div class="banner-bg"></div>
             <div class="banner-content">
                 <h3 class="banner-title">Welcome to our Learning Adventure!</h3>
                 <p class="banner-text">Our educational games combine fun and learning to help young minds develop strong mathematical foundations while enjoying themselves.</p>
-                <a href="#" class="banner-btn pulse">
-                    Start Learning
-                </a>
+                <a href="#modules" class="banner-btn pulse">Explore Activities</a>
             </div>
-            <div class="banner-image float">
-                🧩
+            <div class="banner-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cstyle%3E.st0%7Bfill:%233182ce%7D.st1%7Bfill:%2363b3ed%7D.st2%7Bfill:%23f6ad55%7D.st3%7Bfill:%234fd1c5%7D.st4%7Bfill:%23fff%7D%3C/style%3E%3Ccircle cx='100' cy='100' r='90' fill='%23f7fafc'/%3E%3Cpath class='st0' d='M70 60h60v80H70z'/%3E%3Cpath class='st1' d='M80 70h40v60H80z'/%3E%3Ccircle class='st2' cx='150' cy='60' r='20'/%3E%3Ccircle class='st3' cx='40' cy='50' r='15'/%3E%3Cpath class='st2' d='M25 120l30-15 30 15v30H25z'/%3E%3Ccircle class='st4' cx='100' cy='100' r='15'/%3E%3Cpath class='st4' d='M94 90h12v20H94zm-4-30h20v10H90z'/%3E%3C/svg%3E" alt="Learning Adventure" class="banner-img float">
             </div>
         </div>
         
-        <!-- Initial loading state -->
-        <div id="loadingContainer" class="loading-container" style="display: none;">
-            <div class="loader"></div>
-            <div class="loading-text">Loading repository files...</div>
+        <div class="status-message" id="statusMessage">
+            <i class="fas fa-info-circle"></i> <span id="statusText">Loading resources...</span>
         </div>
         
-        <!-- No content state -->
-        <div id="noContentContainer" class="no-content" style="display: none;">
-            <div class="no-content-icon">
-                <i class="fas fa-folder-open"></i>
+        <div class="controls-section">
+            <h3 class="controls-title">Find the Perfect Learning Activity</h3>
+            <div class="controls-grid">
+                <div class="age-filter" id="ageFilter">
+                    <button class="age-btn all active" data-age="all">All Ages</button>
+                    <button class="age-btn toddler" data-age="toddler">Toddlers (2-3 years)</button>
+                    <button class="age-btn kindergarten" data-age="kindergarten">Early Learners (4-5 years)</button>
+                </div>
+                <div class="search-filter">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search activities...">
+                </div>
             </div>
-            <h2 class="no-content-title">No repository loaded</h2>
-            <p class="no-content-message">Enter your GitHub username and repository name above to load your educational games and resources.</p>
-            <button id="sampleDataBtn" class="no-content-btn">
-                Load Sample Data
-            </button>
         </div>
         
-        <!-- Module grid - will be populated dynamically -->
-        <div id="moduleGrid" class="module-grid">
-            <!-- Modules will be added here by JavaScript -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <p class="loading-text">Loading learning activities...</p>
+        </div>
+        
+        <div class="stats-container" id="statsContainer" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="totalActivities">0</div>
+                <div class="stat-label">Total Activities</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="toddlerActivities">0</div>
+                <div class="stat-label">Toddler Friendly</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="kindergartenActivities">0</div>
+                <div class="stat-label">Early Learner</div>
+            </div>
+        </div>
+        
+        <div class="module-grid" id="moduleGrid">
+            <!-- Modules will be dynamically generated here -->
         </div>
     </div>
     
     <footer>
-        <div class="footer-bg"></div>
         <div class="footer-content">
             <div class="footer-logo">Interactive Mathematics Learning Center</div>
-            <p class="footer-description">Designed to foster mathematical thinking and problem-solving skills in young minds through engaging educational content.</p>
-            
-            <div class="social-links">
-                <a href="#" class="social-link github">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="social-link twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-link youtube">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
+            <p>Designed to foster mathematical thinking and problem-solving skills in young minds through engaging educational content.</p>
         </div>
     </footer>
     
-    <!-- Toast notifications container -->
-    <div id="toastContainer" class="toast-container"></div>
-    
-    <!-- Theme toggle button -->
-    <button class="theme-toggle" id="themeToggle">
+    <div class="theme-toggle" id="themeToggle">
         <i class="fas fa-sun"></i>
-    </button>
+    </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
+            // Elements
             const moduleGrid = document.getElementById('moduleGrid');
             const loadingContainer = document.getElementById('loadingContainer');
-            const noContentContainer = document.getElementById('noContentContainer');
-            const repoOwnerInput = document.getElementById('repoOwner');
-            const repoNameInput = document.getElementById('repoName');
-            const loadRepoBtn = document.getElementById('loadRepoBtn');
-            const sampleDataBtn = document.getElementById('sampleDataBtn');
-            const searchInput = document.getElementById('searchInput');
             const ageButtons = document.querySelectorAll('.age-btn');
+            const searchInput = document.getElementById('searchInput');
             const themeToggle = document.getElementById('themeToggle');
-            const toastContainer = document.getElementById('toastContainer');
+            const statsContainer = document.getElementById('statsContainer');
+            const totalActivitiesEl = document.getElementById('totalActivities');
+            const toddlerActivitiesEl = document.getElementById('toddlerActivities');
+            const kindergartenActivitiesEl = document.getElementById('kindergartenActivities');
+            const statusMessage = document.getElementById('statusMessage');
+            const statusText = document.getElementById('statusText');
             
             // State variables
-            let files = [];
-            let modules = [];
+            let allActivities = [];
+            let filteredActivities = [];
+            let currentAgeFilter = 'all';
+            let currentSearchTerm = '';
             let isDarkMode = false;
-            let activeAgeFilter = 'all';
             
-            // Module definitions with file patterns to match and corresponding icons
-            const moduleDefinitions = [
+            // Module categories
+            const moduleCategories = [
                 {
                     id: 'numbers',
-                    title: 'Number Exploration',
-                    age: 'Ages 2-5',
+                    name: 'Number Exploration',
                     icon: '🔢',
-                    patterns: ['number', 'count', 'math', 'digit', 'arithmetic', 'shape-explorer', 'measurement-quest']
+                    keywords: ['number', 'count', 'math', 'add', 'subtract', 'multiply', 'divide', 'arithmetic']
                 },
                 {
                     id: 'shapes',
-                    title: 'Pattern & Logic',
-                    age: 'Ages 5+',
+                    name: 'Pattern & Logic',
                     icon: '📊',
-                    patterns: ['pattern', 'logic', 'block', 'data', 'statistics', 'scientific', 'vector', 'big-number']
+                    keywords: ['pattern', 'logic', 'shape', 'geometry', 'statistic', 'data']
                 },
                 {
                     id: 'advanced',
-                    title: 'Advanced Concepts',
-                    age: 'Ages 5+',
+                    name: 'Advanced Concepts',
                     icon: '🎓',
-                    patterns: ['advanced', 'calculus', 'curve', 'triangle', 'wizard', 'quantum', 'trig']
+                    keywords: ['advanced', 'calculus', 'algebra', 'trig', 'quantum', 'vector']
                 },
                 {
                     id: 'puzzles',
-                    title: 'Puzzle Collection',
-                    age: 'Ages 2-5',
+                    name: 'Puzzle Collection',
                     icon: '🧩',
-                    patterns: ['puzzle', 'tiles', 'matching', 'mahjong', 'enhanced-tile']
+                    keywords: ['puzzle', 'mahjong', 'match', 'tile', 'problem', 'challenge']
                 },
                 {
                     id: 'games',
-                    title: 'Strategy Games',
-                    age: 'Ages 5+',
+                    name: 'Strategy Games',
                     icon: '🎮',
-                    patterns: ['strategy', 'problem', 'solver', 'lemmings', 'sort', 'solitaire']
+                    keywords: ['game', 'strategy', 'lemming', 'solitaire', 'sort', 'problem', 'solve']
                 },
                 {
                     id: 'discovery',
-                    title: 'Discovery Center',
-                    age: 'Ages 2-5',
+                    name: 'Discovery Center',
                     icon: '🔍',
-                    patterns: ['discovery', 'explorer', 'world', 'geography', 'technology', 'neural', 'brain', 'unit-conversion']
+                    keywords: ['discover', 'explore', 'world', 'geography', 'tech', 'brain', 'convert', 'unit']
                 }
             ];
             
-            // File type icons mapping
-            const fileTypeIcons = {
-                'html': '<i class="fas fa-code"></i>',
-                'css': '<i class="fab fa-css3-alt"></i>',
-                'js': '<i class="fab fa-js-square"></i>',
-                'pdf': '<i class="fas fa-file-pdf"></i>',
-                'jpg': '<i class="fas fa-image"></i>',
-                'jpeg': '<i class="fas fa-image"></i>',
-                'png': '<i class="fas fa-image"></i>',
-                'svg': '<i class="fas fa-bezier-curve"></i>',
-                'default': '<i class="fas fa-file"></i>'
+            // File extension to icon mapping
+            const fileIcons = {
+                'html': '🌐',
+                'pdf': '📄',
+                'js': '📜',
+                'css': '🎨',
+                'jpg': '🖼️',
+                'jpeg': '🖼️',
+                'png': '🖼️',
+                'gif': '🎞️',
+                'md': '📝',
+                'json': '🔧',
+                'txt': '📝',
+                'svg': '🎯',
+                'zip': '📦',
+                'default': '📂'
             };
             
-            // Icon mapping for games based on keywords in filename
-            const gameIcons = [
-                { patterns: ['triangle', 'angle'], icon: '📐' },
-                { patterns: ['number', 'count', 'digit'], icon: '🔢' },
-                { patterns: ['measure', 'unit', 'conversion'], icon: '📏' },
-                { patterns: ['toddler', 'baby', '2-yr', '2 yr'], icon: '👶' },
-                { patterns: ['block', 'build'], icon: '🧱' },
-                { patterns: ['data', 'statistics', 'stat'], icon: '📈' },
-                { patterns: ['science', 'scientific'], icon: '🔬' },
-                { patterns: ['vector', 'direction', 'magnitude'], icon: '➡️' },
-                { patterns: ['math', 'wizard', 'calculus', 'division'], icon: '➗' },
-                { patterns: ['curve', 'graph'], icon: '📈' },
-                { patterns: ['quantum'], icon: '⚛️' },
-                { patterns: ['match', 'mahjong', 'tile'], icon: '🀄' },
-                { patterns: ['learn'], icon: '🎮' },
-                { patterns: ['advanced'], icon: '🎯' },
-                { patterns: ['problem', 'lemmings', 'solver'], icon: '🚶' },
-                { patterns: ['brain'], icon: '🧠' },
-                { patterns: ['card', 'solitaire'], icon: '🃏' },
-                { patterns: ['sort'], icon: '🎴' },
-                { patterns: ['world', 'geography', 'map'], icon: '🌍' },
-                { patterns: ['tech', 'robot'], icon: '🤖' },
-                { patterns: ['neural'], icon: '🧠' },
-                { patterns: ['book', 'story'], icon: '📚' },
-                { patterns: ['default'], icon: '🎮' }
-            ];
+            // Helper function to show status message
+            function showStatus(message, isError = false) {
+                statusText.textContent = message;
+                statusMessage.style.display = 'block';
+                
+                if (isError) {
+                    statusMessage.style.backgroundColor = '#FFF5F5';
+                    statusMessage.style.borderLeftColor = '#F56565';
+                    statusMessage.style.color = '#C53030';
+                } else {
+                    statusMessage.style.backgroundColor = '#EBF8FF';
+                    statusMessage.style.borderLeftColor = '#3182CE';
+                    statusMessage.style.color = '#2B6CB0';
+                }
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
             
-            // Fetch repository files from GitHub API
-            async function fetchRepositoryFiles(owner, repo) {
+            // Function to parse filenames and determine categories
+            function categorizeActivity(filename) {
+                const activity = {
+                    filename: filename,
+                    displayName: prettifyName(filename),
+                    ageGroups: [],
+                    category: null,
+                    extension: getFileExtension(filename),
+                    url: filename // URL is just the filename since they're in the same directory
+                };
+                
+                // Determine age group based on filename
+                if (filename.toLowerCase().includes('2 yr') || 
+                    filename.toLowerCase().includes('toddler') || 
+                    filename.toLowerCase().includes('2-3') ||
+                    filename.toLowerCase().includes('2yr')) {
+                    activity.ageGroups.push('toddler');
+                }
+                
+                if (filename.toLowerCase().includes('5') || 
+                    filename.toLowerCase().includes('kindergarten') || 
+                    filename.toLowerCase().includes('early') ||
+                    !activity.ageGroups.includes('toddler')) { // Default to kindergarten if not specified
+                    activity.ageGroups.push('kindergarten');
+                }
+                
+                // Determine category based on keywords
+                for (const category of moduleCategories) {
+                    for (const keyword of category.keywords) {
+                        if (filename.toLowerCase().includes(keyword)) {
+                            activity.category = category.id;
+                            break;
+                        }
+                    }
+                    if (activity.category) break;
+                }
+                
+                // Default category if not found
+                if (!activity.category) {
+                    // Try to determine category from file extension
+                    if (activity.extension === 'pdf') {
+                        activity.category = 'discovery';
+                    } else if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(activity.extension)) {
+                        activity.category = 'discovery';
+                    } else {
+                        activity.category = 'games'; // Default fallback
+                    }
+                }
+                
+                return activity;
+            }
+            
+            // Helper function to get file extension
+            function getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
+            }
+            
+            // Helper function to prettify display names
+            function prettifyName(filename) {
+                // Remove file extension
+                let name = filename.split('.').slice(0, -1).join('.');
+                
+                // Replace hyphens and underscores with spaces
+                name = name.replace(/[-_]/g, ' ');
+                
+                // Remove version indicators like "v2", "v3"
+                name = name.replace(/\s+v\d+/gi, '');
+                
+                // Capitalize first letter of each word
+                name = name.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+                
+                // Remove any trailing numbers or special chars
+                name = name.replace(/\s+\d+$/, '');
+                
+                return name;
+            }
+            
+            // Function to get appropriate icon for a file
+            function getFileIcon(activity) {
+                if (fileIcons[activity.extension]) {
+                    return fileIcons[activity.extension];
+                }
+                return fileIcons.default;
+            }
+            
+            // Function to organize activities into modules
+            function organizeIntoModules(activities) {
+                const modules = {};
+                
+                // Initialize modules
+                moduleCategories.forEach(category => {
+                    modules[category.id] = {
+                        id: category.id,
+                        name: category.name,
+                        icon: category.icon,
+                        activities: []
+                    };
+                });
+                
+                // Sort activities into modules
+                activities.forEach(activity => {
+                    if (modules[activity.category]) {
+                        modules[activity.category].activities.push(activity);
+                    } else {
+                        // Fallback for uncategorized activities
+                        modules.games.activities.push(activity);
+                    }
+                });
+                
+                return Object.values(modules).filter(module => module.activities.length > 0);
+            }
+            
+            // Function to render modules and activities
+            function renderModules(modules) {
+                moduleGrid.innerHTML = '';
+                
+                if (modules.length === 0) {
+                    moduleGrid.innerHTML = `
+                        <div class="no-results">
+                            <div class="no-results-icon">🔍</div>
+                            <h3 class="no-results-title">No Activities Found</h3>
+                            <p class="no-results-msg">Try changing your search terms or filters.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                modules.forEach((module, index) => {
+                    const moduleElement = document.createElement('div');
+                    moduleElement.className = `module ${module.id}`;
+                    moduleElement.style.animationDelay = `${index * 0.1}s`;
+                    
+                    let activitiesHTML = '';
+                    
+                    // Sort activities alphabetically
+                    module.activities.sort((a, b) => a.displayName.localeCompare(b.displayName));
+                    
+                    module.activities.forEach(activity => {
+                        const icon = getFileIcon(activity);
+                        const ageClasses = activity.ageGroups.map(age => `age-${age}`).join(' ');
+                        
+                        activitiesHTML += `
+                            <li class="game-item ${ageClasses}">
+                                <a href="${activity.url}" target="_blank" class="game-link">
+                                    <span class="game-icon">${icon}</span>
+                                    <span class="game-name">${activity.displayName}</span>
+                                    <span class="game-type">.${activity.extension}</span>
+                                </a>
+                            </li>
+                        `;
+                    });
+                    
+                    const ageRange = determineModuleAgeRange(module.activities);
+                    
+                    moduleElement.innerHTML = `
+                        <div class="module-header">
+                            <h2 class="module-title">${module.name}</h2>
+                            <span class="module-age">${ageRange}</span>
+                            <div class="module-icon">${module.icon}</div>
+                        </div>
+                        <ul class="game-list">
+                            ${activitiesHTML}
+                        </ul>
+                    `;
+                    
+                    moduleGrid.appendChild(moduleElement);
+                });
+            }
+            
+            // Helper to determine age range for a module
+            function determineModuleAgeRange(activities) {
+                const hasToddler = activities.some(activity => activity.ageGroups.includes('toddler'));
+                const hasKindergarten = activities.some(activity => activity.ageGroups.includes('kindergarten'));
+                
+                if (hasToddler && hasKindergarten) {
+                    return "Ages 2-5";
+                } else if (hasToddler) {
+                    return "Ages 2-3";
+                } else {
+                    return "Ages 4-5+";
+                }
+            }
+            
+            // Function to update statistics
+            function updateStats(activities) {
+                const total = activities.length;
+                const toddler = activities.filter(a => a.ageGroups.includes('toddler')).length;
+                const kindergarten = activities.filter(a => a.ageGroups.includes('kindergarten')).length;
+                
+                // Animate count up
+                animateCountUp(totalActivitiesEl, total);
+                animateCountUp(toddlerActivitiesEl, toddler);
+                animateCountUp(kindergartenActivitiesEl, kindergarten);
+                
+                statsContainer.style.display = 'flex';
+            }
+            
+            // Helper for count animation
+            function animateCountUp(element, target) {
+                const duration = 1000; // ms
+                const start = parseInt(element.textContent);
+                const increment = (target - start) / (duration / 16);
+                let current = start;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if ((increment > 0 && current >= target) || 
+                        (increment < 0 && current <= target)) {
+                        clearInterval(timer);
+                        current = target;
+                    }
+                    element.textContent = Math.round(current);
+                }, 16);
+            }
+            
+            // Function to filter activities
+            function filterActivities() {
+                const searchTerm = currentSearchTerm.toLowerCase();
+                
+                filteredActivities = allActivities.filter(activity => {
+                    // Filter by age
+                    const ageMatches = currentAgeFilter === 'all' || 
+                                      activity.ageGroups.includes(currentAgeFilter);
+                    
+                    // Filter by search term
+                    const searchMatches = searchTerm === '' || 
+                                          activity.displayName.toLowerCase().includes(searchTerm) ||
+                                          activity.filename.toLowerCase().includes(searchTerm);
+                    
+                    return ageMatches && searchMatches;
+                });
+                
+                const modules = organizeIntoModules(filteredActivities);
+                renderModules(modules);
+            }
+            
+            // Event listeners for age filter buttons
+            ageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    ageButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentAgeFilter = this.getAttribute('data-age');
+                    filterActivities();
+                });
+            });
+            
+            // Event listener for search input
+            searchInput.addEventListener('input', function() {
+                currentSearchTerm = this.value.trim();
+                filterActivities();
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                isDarkMode = !isDarkMode;
+                
+                if (isDarkMode) {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+            
+            // Main function to fetch directory contents
+            async function fetchDirectoryContents() {
                 try {
-                    showLoading();
+                    let owner = ''; // GitHub username
+                    let repo = ''; // Repository name
                     
-                    // GitHub API URL for fetching repository contents
-                    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
+                    // Try to extract repository info from URL
+                    const pathParts = window.location.pathname.split('/');
                     
-                    // Fetch the data
+                    if (window.location.hostname === 'github.com' || 
+                        window.location.hostname.endsWith('github.io')) {
+                        // Handle GitHub Pages domain
+                        if (window.location.hostname.endsWith('github.io')) {
+                            owner = window.location.hostname.replace('.github.io', '');
+                            if (pathParts.length > 1) {
+                                repo = pathParts[1];
+                            }
+                        } 
+                        // Handle github.com domain
+                        else if (window.location.hostname === 'github.com' && pathParts.length > 2) {
+                            owner = pathParts[1];
+                            repo = pathParts[2];
+                        }
+                    }
+                    
+                    // If we couldn't determine the repository info, use an alternative method
+                    if (!owner || !repo) {
+                        // Fall back to directory scanning with the Fetch API
+                        await fetchWithFallback();
+                        return;
+                    }
+                    
+                    // Determine the path within the repository
+                    let path = '';
+                    const repoIndex = pathParts.indexOf(repo);
+                    if (repoIndex !== -1 && pathParts.length > repoIndex + 1) {
+                        path = pathParts.slice(repoIndex + 1).join('/');
+                    }
+                    
+                    // Use the GitHub API to fetch repository contents
+                    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
                     const response = await fetch(apiUrl);
                     
                     if (!response.ok) {
@@ -1258,586 +1183,143 @@
                     
                     const data = await response.json();
                     
-                    // Filter only files (not directories)
-                    files = data.filter(item => item.type === 'file');
+                    // Filter for files only (exclude directories)
+                    const files = Array.isArray(data) ? 
+                        data.filter(item => item.type === 'file') : 
+                        (data.type === 'file' ? [data] : []);
                     
-                    // Process the files and organize them into modules
-                    processFiles(files);
+                    // Process the files
+                    allActivities = files.map(file => categorizeActivity(file.name));
                     
-                    hideLoading();
-                    hideNoContent();
-                    showToast('success', 'Repository loaded successfully!');
+                    // Update UI
+                    loadingContainer.style.display = 'none';
+                    updateStats(allActivities);
+                    
+                    // Initial render
+                    filteredActivities = [...allActivities];
+                    const modules = organizeIntoModules(filteredActivities);
+                    renderModules(modules);
+                    
                 } catch (error) {
-                    console.error('Error fetching repository files:', error);
-                    hideLoading();
-                    showNoContent();
-                    showToast('error', 'Failed to load repository. Please check the username and repository name.');
+                    console.error('Error fetching directory contents:', error);
+                    
+                    // Try fallback method
+                    await fetchWithFallback();
                 }
             }
             
-            // Process files and organize them into modules
-            function processFiles(files) {
-                // Clear existing modules
-                modules = [];
-                
-                // Initialize module structure
-                moduleDefinitions.forEach(def => {
-                    modules.push({
-                        id: def.id,
-                        title: def.title,
-                        age: def.age,
-                        icon: def.icon,
-                        files: []
-                    });
-                });
-                
-                // Categorize files into modules
-                files.forEach(file => {
-                    const fileName = file.name.toLowerCase();
-                    const fileExtension = fileName.split('.').pop();
+            // Fallback method to scan local directory
+            async function fetchWithFallback() {
+                try {
+                    // Try to fetch a list of files from a potential "files.json" resource
+                    const response = await fetch('files.json');
                     
-                    // Determine file size in KB
-                    const fileSizeKB = Math.round(file.size / 1024);
-                    
-                    // Assign age group based on filename patterns
-                    let ageGroup = [];
-                    if (fileName.includes('toddler') || fileName.includes('2-yr') || fileName.includes('2 yr') || fileName.includes('2-3')) {
-                        ageGroup.push('age-2');
-                    }
-                    if (fileName.includes('early') || fileName.includes('4-5') || fileName.includes('5-') || 
-                        fileName.includes('kinder') || !ageGroup.length) {
-                        ageGroup.push('age-5');
-                    }
-                    
-                    // Generate a human-readable name from the filename
-                    let displayName = file.name
-                        .replace(/\.[^/.]+$/, "") // Remove file extension
-                        .replace(/-/g, " ")       // Replace hyphens with spaces
-                        .replace(/_/g, " ")       // Replace underscores with spaces
-                        .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize first letter of each word
-                    
-                    // Shorten very long display names
-                    if (displayName.length > 30) {
-                        displayName = displayName.substring(0, 27) + '...';
-                    }
-                    
-                    // Generate file description based on name
-                    let description = '';
-                    if (fileName.includes('game') || fileName.includes('explorer') || fileName.includes('adventure')) {
-                        description = 'Interactive learning game';
-                    } else if (fileName.includes('quiz')) {
-                        description = 'Knowledge assessment quiz';
-                    } else if (fileName.includes('lesson')) {
-                        description = 'Educational lesson material';
-                    } else if (fileName.includes('pdf') || fileName.includes('doc')) {
-                        description = 'Learning resource document';
-                    } else {
-                        description = 'Mathematics learning resource';
-                    }
-                    
-                    // Find the game icon based on filename
-                    let gameIcon = gameIcons.find(item => 
-                        item.patterns.some(pattern => fileName.includes(pattern))
-                    );
-                    
-                    if (!gameIcon) {
-                        gameIcon = gameIcons.find(item => item.patterns.includes('default'));
-                    }
-                    
-                    // Create file object
-                    const fileObj = {
-                        name: file.name,
-                        displayName: displayName,
-                        description: description,
-                        url: file.html_url,
-                        download_url: file.download_url,
-                        raw_url: file.download_url, // GitHub raw content URL
-                        type: fileExtension,
-                        size: fileSizeKB,
-                        ageGroup: ageGroup,
-                        icon: gameIcon.icon
-                    };
-                    
-                    // Determine which module this file belongs to
-                    let assigned = false;
-                    
-                    for (const module of modules) {
-                        const moduleIndex = moduleDefinitions.findIndex(def => def.id === module.id);
-                        const patterns = moduleDefinitions[moduleIndex].patterns;
+                    if (response.ok) {
+                        const data = await response.json();
                         
-                        if (patterns.some(pattern => fileName.includes(pattern))) {
-                            module.files.push(fileObj);
-                            assigned = true;
-                            break;
+                        if (Array.isArray(data)) {
+                            allActivities = data.map(filename => categorizeActivity(filename));
+                        } else if (data.files && Array.isArray(data.files)) {
+                            allActivities = data.files.map(filename => categorizeActivity(filename));
                         }
-                    }
-                    
-                    // If not assigned to any specific module, add to discovery by default
-                    if (!assigned) {
-                        const discoveryModule = modules.find(module => module.id === 'discovery');
-                        discoveryModule.files.push(fileObj);
-                    }
-                });
-                
-                // Render the modules
-                renderModules();
-            }
-            
-            // Render modules and their files
-            function renderModules() {
-                // Clear the module grid
-                moduleGrid.innerHTML = '';
-                
-                // Filter modules that have files
-                const modulesWithFiles = modules.filter(module => module.files.length > 0);
-                
-                // If no modules with files, show no content message
-                if (modulesWithFiles.length === 0) {
-                    showNoContent();
-                    return;
-                }
-                
-                // Render each module
-                modulesWithFiles.forEach((module, index) => {
-                    // Create module element
-                    const moduleElement = document.createElement('div');
-                    moduleElement.className = `module ${module.id} animate-in`;
-                    moduleElement.style.animationDelay = `${index * 0.1}s`;
-                    
-                    // Create module header
-                    moduleElement.innerHTML = `
-                        <div class="module-header">
-                            <h2 class="module-title">${module.title}</h2>
-                            <span class="module-age">${module.age}</span>
-                            <div class="module-icon">${module.icon}</div>
-                        </div>
-                        <ul class="game-list">
-                            ${renderFiles(module.files)}
-                        </ul>
-                    `;
-                    
-                    // Add module to the grid
-                    moduleGrid.appendChild(moduleElement);
-                });
-                
-                // Apply current age filter
-                filterGamesByAge(activeAgeFilter);
-            }
-            
-            // Render files within a module
-            function renderFiles(files) {
-                return files.map(file => {
-                    // Get file type icon
-                    const typeIcon = fileTypeIcons[file.type] || fileTypeIcons.default;
-                    
-                    // Create age group class string
-                    const ageClasses = file.ageGroup.join(' ');
-                    
-                    return `
-                        <li class="game-item ${ageClasses}">
-                            <a href="${file.download_url}" target="_blank" class="game-link">
-                                <span class="game-icon">${file.icon}</span>
-                                <div class="game-details">
-                                    <span class="game-name">${file.displayName}</span>
-                                    <span class="game-description">${file.description}</span>
-                                    <div class="game-meta">
-                                        <span class="game-type">
-                                            ${typeIcon} ${file.type.toUpperCase()}
-                                        </span>
-                                        <span class="game-size">
-                                            <i class="fas fa-file-archive"></i> ${file.size} KB
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    `;
-                }).join('');
-            }
-            
-            // Filter games by age group
-            function filterGamesByAge(ageFilter) {
-                const allGames = document.querySelectorAll('.game-item');
-                
-                allGames.forEach(game => {
-                    if (ageFilter === 'all') {
-                        game.style.display = 'block';
-                    } else if (ageFilter === 'toddler') {
-                        if (game.classList.contains('age-2')) {
-                            game.style.display = 'block';
-                        } else {
-                            game.style.display = 'none';
-                        }
-                    } else if (ageFilter === 'kindergarten') {
-                        if (game.classList.contains('age-5')) {
-                            game.style.display = 'block';
-                        } else {
-                            game.style.display = 'none';
-                        }
-                    }
-                });
-                
-                // Store active filter
-                activeAgeFilter = ageFilter;
-            }
-            
-            // Show loading state
-            function showLoading() {
-                loadingContainer.style.display = 'flex';
-                noContentContainer.style.display = 'none';
-            }
-            
-            // Hide loading state
-            function hideLoading() {
-                loadingContainer.style.display = 'none';
-            }
-            
-            // Show no content state
-            function showNoContent() {
-                noContentContainer.style.display = 'block';
-                moduleGrid.innerHTML = '';
-            }
-            
-            // Hide no content state
-            function hideNoContent() {
-                noContentContainer.style.display = 'none';
-            }
-            
-            // Search functionality
-            function searchGames(query) {
-                const searchTerm = query.toLowerCase();
-                const allGames = document.querySelectorAll('.game-item');
-                
-                allGames.forEach(game => {
-                    const gameLink = game.querySelector('.game-link');
-                    const gameName = gameLink.querySelector('.game-name').textContent.toLowerCase();
-                    const gameDesc = gameLink.querySelector('.game-description').textContent.toLowerCase();
-                    const gameType = gameLink.querySelector('.game-type').textContent.toLowerCase();
-                    
-                    if (gameName.includes(searchTerm) || gameDesc.includes(searchTerm) || gameType.includes(searchTerm)) {
-                        game.style.display = 'block';
                     } else {
-                        game.style.display = 'none';
+                        // If no files.json, create one with demo data
+                        createDemoData();
                     }
-                });
-            }
-            
-            // Show toast notification
-            function showToast(type, message) {
-                // Create toast element
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                
-                // Set icon based on type
-                let icon = '';
-                if (type === 'success') {
-                    icon = '<i class="fas fa-check-circle toast-icon"></i>';
-                } else if (type === 'error') {
-                    icon = '<i class="fas fa-exclamation-circle toast-icon"></i>';
-                } else {
-                    icon = '<i class="fas fa-info-circle toast-icon"></i>';
+                    
+                    // Update UI
+                    loadingContainer.style.display = 'none';
+                    updateStats(allActivities);
+                    
+                    // Initial render
+                    filteredActivities = [...allActivities];
+                    const modules = organizeIntoModules(filteredActivities);
+                    renderModules(modules);
+                    
+                    // Show instructions for setup
+                    if (allActivities.length === 0 || allActivities[0].isDemoData) {
+                        showSetupInstructions();
+                    }
+                    
+                } catch (error) {
+                    console.error('Fallback method error:', error);
+                    createDemoData();
+                    
+                    // Update UI with demo data
+                    loadingContainer.style.display = 'none';
+                    updateStats(allActivities);
+                    
+                    filteredActivities = [...allActivities];
+                    const modules = organizeIntoModules(filteredActivities);
+                    renderModules(modules);
+                    
+                    showSetupInstructions();
                 }
-                
-                // Set content
-                toast.innerHTML = `
-                    ${icon}
-                    <span class="toast-message">${message}</span>
-                    <button class="toast-close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                
-                // Add to container
-                toastContainer.appendChild(toast);
-                
-                // Add close functionality
-                const closeBtn = toast.querySelector('.toast-close');
-                closeBtn.addEventListener('click', () => {
-                    toast.remove();
-                });
-                
-                // Auto remove after 3 seconds
-                setTimeout(() => {
-                    toast.remove();
-                }, 3000);
             }
             
-            // Load sample data for demonstration
-            function loadSampleData() {
-                // Sample repository files
-                const sampleFiles = [
-                    {
-                        name: "shape-explorer-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 15360,
-                        type: "file"
-                    },
-                    {
-                        name: "triangle-adventure-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 12288,
-                        type: "file"
-                    },
-                    {
-                        name: "unit-conversion-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 10240,
-                        type: "file"
-                    },
-                    {
-                        name: "toddler-math-zone.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 8192,
-                        type: "file"
-                    },
-                    {
-                        name: "block-builder-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 14336,
-                        type: "file"
-                    },
-                    {
-                        name: "data-detective-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 11264,
-                        type: "file"
-                    },
-                    {
-                        name: "big-numbers-explorer.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 9216,
-                        type: "file"
-                    },
-                    {
-                        name: "direction-magnitude-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 13312,
-                        type: "file"
-                    },
-                    {
-                        name: "math-wizard-academy.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 16384,
-                        type: "file"
-                    },
-                    {
-                        name: "curve-explorer-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 12288,
-                        type: "file"
-                    },
-                    {
-                        name: "triangle-magic-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 10240,
-                        type: "file"
-                    },
-                    {
-                        name: "quantum-quest-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 17408,
-                        type: "file"
-                    },
-                    {
-                        name: "matching-tiles-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 7168,
-                        type: "file"
-                    },
-                    {
-                        name: "learning-tiles-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 8192,
-                        type: "file"
-                    },
-                    {
-                        name: "enhanced-tiles-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 9216,
-                        type: "file"
-                    },
-                    {
-                        name: "advanced-tiles-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 10240,
-                        type: "file"
-                    },
-                    {
-                        name: "problem-solvers-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 13312,
-                        type: "file"
-                    },
-                    {
-                        name: "advanced-problem-solvers.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 15360,
-                        type: "file"
-                    },
-                    {
-                        name: "sequential-sorting-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 11264,
-                        type: "file"
-                    },
-                    {
-                        name: "advanced-sorting-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 12288,
-                        type: "file"
-                    },
-                    {
-                        name: "world-explorer-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 14336,
-                        type: "file"
-                    },
-                    {
-                        name: "technology-explorer-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 16384,
-                        type: "file"
-                    },
-                    {
-                        name: "brain-builder-game.html",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 10240,
-                        type: "file"
-                    },
-                    {
-                        name: "measuring-story-book.pdf",
-                        html_url: "#",
-                        download_url: "#",
-                        size: 5120,
-                        type: "file"
-                    }
+            // Function to create demo data for initial setup
+            function createDemoData() {
+                const demoFiles = [
+                    'area-volume-game.html',
+                    'triangle-explorer-game.html',
+                    'unit-conversion-game.html',
+                    'toddler-math-zone.html',
+                    'binomial-blocks-game.html',
+                    'statistics-game.html',
+                    'calculus-game.html',
+                    'trig-adventure.html',
+                    'matching-tiles-game.html',
+                    'problem-solvers-game.html',
+                    'world-explorer-game.html',
+                    'measurement-story.pdf'
                 ];
                 
-                // Process the sample files
-                processFiles(sampleFiles);
-                
-                hideLoading();
-                hideNoContent();
-                showToast('info', 'Sample data loaded successfully!');
+                allActivities = demoFiles.map(filename => {
+                    const activity = categorizeActivity(filename);
+                    activity.isDemoData = true;
+                    return activity;
+                });
             }
             
-            // Toggle dark/light mode
-            function toggleTheme() {
-                const body = document.body;
-                const themeIcon = themeToggle.querySelector('i');
+            // Function to show setup instructions
+            function showSetupInstructions() {
+                showStatus("Setup required: Create a files.json to index your content.", true);
                 
-                if (isDarkMode) {
-                    // Switch to light mode
-                    body.classList.remove('dark-mode');
-                    themeIcon.className = 'fas fa-sun';
-                } else {
-                    // Switch to dark mode
-                    body.classList.add('dark-mode');
-                    themeIcon.className = 'fas fa-moon';
-                }
+                // Create a files.json template for the user
+                const setupBox = document.createElement('div');
+                setupBox.className = 'welcome-banner';
+                setupBox.style.marginTop = '2rem';
                 
-                isDarkMode = !isDarkMode;
+                setupBox.innerHTML = `
+                    <div class="banner-content">
+                        <h3 class="banner-title">Setup Your Dynamic Index</h3>
+                        <p class="banner-text">
+                            To make this index page automatically detect your files, create a <strong>files.json</strong> 
+                            file in the same directory with the following format:
+                        </p>
+                        <pre style="background-color: rgba(0,0,0,0.05); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; font-family: monospace;">
+{
+    "files": [
+        "game1.html",
+        "game2.html",
+        "story.pdf",
+        "activity-sheet.html",
+        "toddler-game.html"
+        // Add all your filenames here
+    ]
+}
+                        </pre>
+                        <p class="banner-text">
+                            The system will automatically categorize files based on their names and extensions.
+                        </p>
+                    </div>
+                `;
+                
+                document.querySelector('.container').appendChild(setupBox);
             }
             
-            // Event Listeners
-            
-            // Load repository button
-            loadRepoBtn.addEventListener('click', function() {
-                const owner = repoOwnerInput.value.trim();
-                const repo = repoNameInput.value.trim();
-                
-                if (owner && repo) {
-                    fetchRepositoryFiles(owner, repo);
-                } else {
-                    showToast('error', 'Please enter both GitHub username and repository name.');
-                }
-            });
-            
-            // Sample data button
-            sampleDataBtn.addEventListener('click', function() {
-                loadSampleData();
-            });
-            
-            // Search input
-            searchInput.addEventListener('input', function() {
-                searchGames(this.value);
-            });
-            
-            // Age filter buttons
-            ageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    ageButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Filter games based on selected age
-                    if (this.classList.contains('all')) {
-                        filterGamesByAge('all');
-                    } else if (this.classList.contains('toddler')) {
-                        filterGamesByAge('toddler');
-                    } else if (this.classList.contains('kindergarten')) {
-                        filterGamesByAge('kindergarten');
-                    }
-                });
-            });
-            
-            // Theme toggle
-            themeToggle.addEventListener('click', toggleTheme);
-            
-            // Initialize the page
-            showNoContent();
-            
-            // Check for saved repository
-            const savedOwner = localStorage.getItem('repoOwner');
-            const savedRepo = localStorage.getItem('repoName');
-            
-            if (savedOwner && savedRepo) {
-                repoOwnerInput.value = savedOwner;
-                repoNameInput.value = savedRepo;
-                fetchRepositoryFiles(savedOwner, savedRepo);
-            }
-            
-            // Animation on scroll
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            // Observe modules for animation
-            setTimeout(() => {
-                const modules = document.querySelectorAll('.module');
-                modules.forEach(module => {
-                    observer.observe(module);
-                });
-            }, 500);
+            // Start the app
+            fetchDirectoryContents();
         });
     </script>
 </body>
